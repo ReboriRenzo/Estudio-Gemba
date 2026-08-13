@@ -125,6 +125,6 @@ export function getServicio(slug: string) {
   return SERVICIOS.find((s) => s.slug === slug);
 }
 
-export function slugsServicios() {
+export function slugsServicios(): string[] {
   return SERVICIOS.map((s) => s.slug);
 }

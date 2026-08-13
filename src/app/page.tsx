@@ -1,69 +1,117 @@
-import Image from "next/image";
+import Link from "next/link";
+import { CtaBand } from "@/components/CtaBand";
+import { MethodSteps } from "@/components/MethodSteps";
+import { NewsletterForm } from "@/components/NewsletterForm";
+import { ServiceCard } from "@/components/ServiceCard";
+import { slugsServicios } from "@/lib/servicios";
 
-export default function Home() {
+export default function HomePage() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <>
+      <section className="border-b border-navy/15">
+        <div className="mx-auto flex min-h-[70vh] max-w-6xl flex-col justify-center px-4 py-20">
+          <p className="text-xs uppercase tracking-[0.28em]">
+            Estudio técnico · Buenos Aires
           </p>
+          <h1 className="hero-in mt-6 max-w-4xl text-3xl font-medium uppercase tracking-[0.12em] md:text-5xl md:leading-tight">
+            Optimización de procesos con datos de planta, no con recetas
+            genéricas
+          </h1>
+          <p className="mt-6 max-w-2xl text-lg leading-relaxed">
+            Para jefes de planta y directores de operaciones de PyMEs
+            industriales que necesitan resultados medibles en la línea.
+          </p>
+          <div className="mt-10 flex flex-wrap gap-4">
+            <Link
+              href="/contacto"
+              className="bg-navy px-6 py-3 text-sm uppercase tracking-[0.12em] text-white"
+            >
+              Solicitar presupuesto
+            </Link>
+            <Link
+              href="/servicios"
+              className="border border-navy px-6 py-3 text-sm uppercase tracking-[0.12em]"
+            >
+              Ver servicios
+            </Link>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </section>
+
+      <section className="border-b border-navy/15 bg-paper">
+        <div className="mx-auto grid max-w-6xl gap-6 px-4 py-10 sm:grid-cols-2 lg:grid-cols-4">
+          {["OEE", "Scrap", "Tiempos muertos", "Disponibilidad"].map((term) => (
+            <p
+              key={term}
+              className="text-sm uppercase tracking-[0.2em]"
+            >
+              {term}
+            </p>
+          ))}
         </div>
-      </main>
-    </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-4 py-20">
+        <h2 className="text-2xl font-medium uppercase tracking-[0.16em]">
+          Servicios
+        </h2>
+        <p className="mt-4 max-w-2xl text-base leading-relaxed">
+          Cinco líneas de trabajo para intervenir la planta con números, no con
+          teoría.
+        </p>
+        <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {slugsServicios().map((slug) => (
+            <ServiceCard key={slug} slug={slug} variant="home" />
+          ))}
+        </div>
+      </section>
+
+      <section className="border-y border-navy/15 bg-paper">
+        <div className="mx-auto max-w-6xl px-4 py-20">
+          <h2 className="mb-10 text-2xl font-medium uppercase tracking-[0.16em]">
+            Método
+          </h2>
+          <MethodSteps />
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-4 py-20">
+        <h2 className="text-2xl font-medium uppercase tracking-[0.16em]">
+          Estudio técnico
+        </h2>
+        <p className="mt-6 max-w-2xl text-base leading-relaxed">
+          Estudio Gemba trabaja con PyMEs industriales de Buenos Aires, Zona
+          Sur, y en el resto del país bajo coordinación. El punto de partida es
+          el piso: OEE, scrap y tiempos muertos, antes de cualquier herramienta.
+        </p>
+        <p className="mt-4 max-w-2xl text-base leading-relaxed">
+          No vendemos un programa genérico de mejora continua. Diagnosticamos,
+          priorizamos e implementamos con el equipo de planta.
+        </p>
+        <Link
+          href="/sobre-nosotros"
+          className="mt-6 inline-block border-b border-navy text-sm uppercase tracking-[0.12em]"
+        >
+          Sobre nosotros
+        </Link>
+      </section>
+
+      <CtaBand
+        title="Solicitá un presupuesto para tu planta"
+        href="/contacto"
+      />
+
+      <section className="mx-auto max-w-6xl px-4 py-20">
+        <h2 className="text-2xl font-medium uppercase tracking-[0.16em]">
+          Newsletter
+        </h2>
+        <p className="mt-4 mb-8 max-w-xl text-base leading-relaxed">
+          Notas breves sobre diagnóstico de planta y seguimiento de indicadores.
+        </p>
+        <div className="max-w-md">
+          <NewsletterForm variant="page" />
+        </div>
+      </section>
+    </>
   );
 }
