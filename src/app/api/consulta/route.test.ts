@@ -31,6 +31,7 @@ describe("POST /api/consulta", () => {
           nombre: "Ana",
           email: "ana@acme.com",
           sector: "metalúrgica",
+          preferencia: "email",
         }),
       }),
     );

@@ -39,8 +39,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="es-AR"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      suppressHydrationWarning
     >
-      <body className="flex min-h-full flex-col bg-white font-sans text-navy">
+      <body
+        className="flex min-h-full flex-col bg-white font-sans text-navy"
+        suppressHydrationWarning
+      >
         <a
           href="#contenido"
           className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:bg-navy focus:px-4 focus:py-2 focus:text-white focus:outline-none"

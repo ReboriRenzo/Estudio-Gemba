@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { CtaBand } from "@/components/CtaBand";
-import { PageHero } from "@/components/PageHero";
-import { ServiceCard } from "@/components/ServiceCard";
-import { slugsServicios } from "@/lib/servicios";
+import { PhotoHero } from "@/components/PhotoHero";
+import { ServiceGrid } from "@/components/ServiceGrid";
 
 export const metadata: Metadata = {
   title: "Servicios",
@@ -13,21 +12,17 @@ export const metadata: Metadata = {
 export default function ServiciosPage() {
   return (
     <>
-      <PageHero
+      <PhotoHero
+        kicker="Catálogo"
         title="Servicios"
         description="No vendemos mejora continua genérica. Diagnosticamos con números e implementamos en el piso."
+        image="/servicios/hero.png"
+        alt="Estaciones de trabajo en planta: cada servicio se ejecuta en la línea"
       />
       <section className="mx-auto max-w-6xl px-4 py-16">
-        <div className="grid gap-6 md:grid-cols-2">
-          {slugsServicios().map((slug) => (
-            <ServiceCard key={slug} slug={slug} variant="catalog" />
-          ))}
-        </div>
+        <ServiceGrid variant="catalog" />
       </section>
-      <CtaBand
-        title="Pedí un presupuesto con el servicio que necesitás"
-        href="/contacto"
-      />
+      <CtaBand title="Consultá el servicio para tu planta" href="/contacto" />
     </>
   );
 }

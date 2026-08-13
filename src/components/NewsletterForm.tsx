@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
+import type { PreferenciaRespuesta } from "@/lib/consulta";
 
 type NewsletterFormProps = {
   variant: "page" | "footer";
@@ -13,11 +14,15 @@ const ERROR_ENVIO =
 const EXITO_QUEUED =
   "Recibimos tus datos. Cuando el canal de contacto esté activo, te responderemos.";
 const EXITO_EMAIL = "Recibimos tu consulta. Te respondemos por email.";
+const EXITO_MAILTO = "Se abrió tu cliente de correo con la suscripción.";
+const EXITO_WPP =
+  "Te abrimos WhatsApp con tus datos para coordinar la suscripción.";
 
 export function NewsletterForm({ variant }: NewsletterFormProps) {
   const [nombre, setNombre] = useState("");
   const [email, setEmail] = useState("");
   const [sector, setSector] = useState("");
+  const [preferencia, setPreferencia] = useState<PreferenciaRespuesta>("email");
   const [errors, setErrors] = useState<FieldErrors>({});
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">(
     "idle",
@@ -29,6 +34,7 @@ export function NewsletterForm({ variant }: NewsletterFormProps) {
     ? "mt-1 w-full rounded-none border border-white bg-navy px-3 py-2 text-sm text-white"
     : "mt-1 w-full rounded-none border border-navy bg-white px-3 py-2 text-sm text-navy";
   const labelClass = isFooter ? "text-sm text-white" : "text-sm text-navy";
+  const radioClass = isFooter ? "accent-white" : "accent-navy";
   const errorClass = "mt-1 text-sm";
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
@@ -46,6 +52,7 @@ export function NewsletterForm({ variant }: NewsletterFormProps) {
           nombre,
           email,
           sector: isFooter ? "" : sector,
+          preferencia,
         }),
       });
 
@@ -56,6 +63,7 @@ export function NewsletterForm({ variant }: NewsletterFormProps) {
         queued?: boolean;
         emailed?: boolean;
         whatsappUrl?: string;
+        mailtoUrl?: string;
       } = await res.json();
 
       if (res.status === 400 && json.errors) {
@@ -71,7 +79,17 @@ export function NewsletterForm({ variant }: NewsletterFormProps) {
       }
 
       if (json.whatsappUrl) {
-        window.open(json.whatsappUrl, "_blank", "noopener,noreferrer");
+        window.location.assign(json.whatsappUrl);
+        setStatus("success");
+        setMessage(EXITO_WPP);
+        return;
+      }
+
+      if (json.mailtoUrl) {
+        window.location.assign(json.mailtoUrl);
+        setStatus("success");
+        setMessage(EXITO_MAILTO);
+        return;
       }
 
       setStatus("success");
@@ -133,6 +151,36 @@ export function NewsletterForm({ variant }: NewsletterFormProps) {
           />
         </div>
       ) : null}
+      <fieldset>
+        <legend className={labelClass}>Contactar por</legend>
+        <div className="mt-2 flex flex-wrap gap-4">
+          <label className={`inline-flex items-center gap-2 ${labelClass}`}>
+            <input
+              type="radio"
+              name={`newsletter-preferencia-${variant}`}
+              value="email"
+              checked={preferencia === "email"}
+              onChange={() => setPreferencia("email")}
+              className={radioClass}
+            />
+            Email
+          </label>
+          <label className={`inline-flex items-center gap-2 ${labelClass}`}>
+            <input
+              type="radio"
+              name={`newsletter-preferencia-${variant}`}
+              value="whatsapp"
+              checked={preferencia === "whatsapp"}
+              onChange={() => setPreferencia("whatsapp")}
+              className={radioClass}
+            />
+            WhatsApp
+          </label>
+        </div>
+        {errors.preferencia ? (
+          <p className={errorClass}>{errors.preferencia}</p>
+        ) : null}
+      </fieldset>
       {status === "error" ? <p className={errorClass}>{message}</p> : null}
       <button
         type="submit"

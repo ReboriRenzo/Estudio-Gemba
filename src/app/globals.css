@@ -4,6 +4,12 @@
   --navy: #0c1220;
   --white: #ffffff;
   --paper: #f4f4f2;
+  --site-header-h: 4.25rem;
+  --dev-banner-h: 0px;
+}
+
+body:has([data-dev-banner]) {
+  --dev-banner-h: 2.5rem;
 }
 
 @theme inline {
@@ -35,10 +41,6 @@ select {
   border-radius: 0;
 }
 
-.logo-footer {
-  filter: brightness(0) invert(1);
-}
-
 a:focus-visible,
 button:focus-visible,
 input:focus-visible,
@@ -61,4 +63,47 @@ select:focus-visible {
 
 .hero-in {
   animation: hero-in 400ms ease-out both;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 42s linear infinite;
+}
+
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
+.boletin-live {
+  animation: boletin-live 2.2s ease-in-out infinite;
+}
+
+@keyframes boletin-live {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
+
+  .boletin-live {
+    animation: none;
+  }
 }

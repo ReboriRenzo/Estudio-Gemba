@@ -25,6 +25,7 @@ const newsletterOk = {
   nombre: "Ana Pérez",
   email: "ana@acme.com",
   sector: "",
+  preferencia: "email",
 } as const;
 
 describe("validateConsulta", () => {
@@ -76,8 +77,50 @@ describe("validateConsulta", () => {
       tipo: "newsletter",
       nombre: "Ana Pérez",
       email: "ana@acme.com",
+      preferencia: "email",
     });
     expect(r).toEqual({ ok: true, data: newsletterOk });
+  });
+
+  it("rechaza newsletter sin preferencia de canal", () => {
+    const r = validateConsulta({
+      tipo: "newsletter",
+      nombre: "Ana Pérez",
+      email: "ana@acme.com",
+    });
+    expect(r.ok).toBe(false);
+    if (!r.ok) expect(r.errors.preferencia).toBe("Completá este campo.");
+  });
+
+  it("acepta consulta por email", () => {
+    const r = validateConsulta({
+      tipo: "consulta",
+      empresa: "Acme SA",
+      nombre: "Ana Pérez",
+      email: "ana@acme.com",
+      mensaje: "Consulta sobre OEE.",
+    });
+    expect(r).toEqual({
+      ok: true,
+      data: {
+        tipo: "consulta",
+        empresa: "Acme SA",
+        nombre: "Ana Pérez",
+        email: "ana@acme.com",
+        mensaje: "Consulta sobre OEE.",
+      },
+    });
+  });
+
+  it("rechaza consulta sin empresa", () => {
+    const r = validateConsulta({
+      tipo: "consulta",
+      nombre: "Ana Pérez",
+      email: "ana@acme.com",
+      mensaje: "Consulta sobre OEE.",
+    });
+    expect(r.ok).toBe(false);
+    if (!r.ok) expect(r.errors.empresa).toBe("Completá este campo.");
   });
 });
 
@@ -101,7 +144,45 @@ describe("resolverEnvio", () => {
     }
   });
 
-  it("emailed si newsletter + email + sendEmail", async () => {
+  it("newsletter abre WhatsApp si la preferencia es whatsapp", async () => {
+    const sendEmail = vi.fn();
+    const r = await resolverEnvio(
+      { ...newsletterOk, sector: "metalúrgica", preferencia: "whatsapp" },
+      {
+        ...contacto,
+        email: "estudio@gemba.com",
+        whatsapp: "5491112345678",
+      },
+      { sendEmail },
+    );
+    expect(r.kind).toBe("whatsapp");
+    expect(sendEmail).not.toHaveBeenCalled();
+    if (r.kind === "whatsapp") {
+      const decoded = decodeURIComponent(r.url);
+      expect(decoded).toContain("https://wa.me/5491112345678?text=");
+      expect(decoded).toContain("Ana Pérez");
+      expect(decoded).toContain("ana@acme.com");
+      expect(decoded).toContain("metalúrgica");
+      expect(decoded).toContain("suscribirme al boletín de industria");
+    }
+  });
+
+  it("newsletter usa email aunque haya WhatsApp si la preferencia es email", async () => {
+    const sendEmail = vi.fn().mockResolvedValue(undefined);
+    const r = await resolverEnvio(
+      newsletterOk,
+      {
+        ...contacto,
+        email: "estudio@gemba.com",
+        whatsapp: "5491112345678",
+      },
+      { sendEmail },
+    );
+    expect(r).toEqual({ kind: "emailed" });
+    expect(sendEmail).toHaveBeenCalledOnce();
+  });
+
+  it("emailed si newsletter + email + sendEmail y no hay WhatsApp", async () => {
     const sendEmail = vi.fn().mockResolvedValue(undefined);
     const r = await resolverEnvio(
       newsletterOk,
@@ -111,9 +192,42 @@ describe("resolverEnvio", () => {
     expect(r).toEqual({ kind: "emailed" });
     expect(sendEmail).toHaveBeenCalledWith({
       to: "estudio@gemba.com",
-      subject: "Newsletter — Ana Pérez",
+      subject: "Boletín de Industria — Ana Pérez",
       text: formatConsultaText(newsletterOk),
     });
+  });
+
+  it("newsletter con preferencia email usa mailto si hay casilla y no hay Resend", async () => {
+    const r = await resolverEnvio(
+      newsletterOk,
+      { ...contacto, email: "hola@estudiogemba.com.ar" },
+      {},
+    );
+    expect(r.kind).toBe("mailto");
+    if (r.kind === "mailto") {
+      expect(r.url).toContain("mailto:hola@estudiogemba.com.ar");
+      expect(decodeURIComponent(r.url)).toContain("Boletín de Industria");
+    }
+  });
+
+  it("consulta por email usa mailto si hay casilla y no hay Resend", async () => {
+    const r = await resolverEnvio(
+      {
+        tipo: "consulta",
+        empresa: "Acme SA",
+        nombre: "Ana Pérez",
+        email: "ana@acme.com",
+        mensaje: "Consulta sobre OEE.",
+      },
+      { ...contacto, email: "hola@estudiogemba.com.ar" },
+      {},
+    );
+    expect(r.kind).toBe("mailto");
+    if (r.kind === "mailto") {
+      expect(r.url).toContain("mailto:hola@estudiogemba.com.ar");
+      expect(decodeURIComponent(r.url)).toContain("Consulta sobre OEE.");
+      expect(decodeURIComponent(r.url)).toContain("Acme SA");
+    }
   });
 
   it("provider_error si sendEmail rechaza", async () => {
@@ -140,5 +254,17 @@ describe("formatConsultaText", () => {
     const text = formatConsultaText(presupuestoOk);
     expect(text).toContain("Acme SA");
     expect(text).toContain("presupuesto");
+  });
+
+  it("consulta incluye empresa del cliente", () => {
+    const text = formatConsultaText({
+      tipo: "consulta",
+      empresa: "Acme SA",
+      nombre: "Ana Pérez",
+      email: "ana@acme.com",
+      mensaje: "Consulta sobre OEE.",
+    });
+    expect(text).toContain("Empresa: Acme SA");
+    expect(text).toContain("consulta");
   });
 });

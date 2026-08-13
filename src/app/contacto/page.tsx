@@ -1,34 +1,46 @@
 import type { Metadata } from "next";
-import { BudgetForm } from "@/components/BudgetForm";
-import { NewsletterForm } from "@/components/NewsletterForm";
-import { PageHero } from "@/components/PageHero";
+import { ConsultaEmailForm } from "@/components/ConsultaEmailForm";
+import { PhotoHero } from "@/components/PhotoHero";
+import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { canalesDisponibles, contacto } from "@/lib/contacto";
 
 export const metadata: Metadata = {
   title: "Contacto",
   description:
-    "Solicitá presupuesto a Estudio Gemba. Horario 09:00 a 20:00. Zona Sur, Buenos Aires.",
+    "Contactá a Estudio Gemba por WhatsApp o email. Horario 09:00 a 20:00. Zona Sur, Buenos Aires.",
 };
 
-type Props = { searchParams: Promise<{ servicio?: string }> };
-
-export default async function ContactoPage({ searchParams }: Props) {
-  const { servicio } = await searchParams;
+export default function ContactoPage() {
   const canales = canalesDisponibles(contacto);
 
   return (
     <>
-      <PageHero
+      <PhotoHero
+        kicker="Estudio Gemba"
         title="Contacto"
-        description="Completá el formulario y te respondemos por el canal que elijas cuando esté activo."
+        description="Escribinos por WhatsApp o enviá una consulta por email."
+        image="/contacto/hero.png"
+        alt="Escritorio técnico junto a la planta"
       />
       <div className="mx-auto grid max-w-6xl gap-12 px-4 py-16 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,0.8fr)]">
-        <section>
-          <h2 className="mb-6 text-sm uppercase tracking-[0.18em]">
-            Solicitar presupuesto
-          </h2>
-          <BudgetForm servicioInicial={servicio} />
-        </section>
+        <div className="flex flex-col gap-14">
+          <section>
+            <h2 className="mb-3 text-sm uppercase tracking-[0.18em]">WhatsApp</h2>
+            <p className="mb-6 max-w-xl text-sm leading-relaxed">
+              Coordinación directa con el estudio.
+            </p>
+            <WhatsAppButton />
+          </section>
+          <section>
+            <h2 className="mb-3 text-sm uppercase tracking-[0.18em]">
+              Consulta por email
+            </h2>
+            <p className="mb-6 max-w-xl text-sm leading-relaxed">
+              Completá el formulario y te respondemos por correo.
+            </p>
+            <ConsultaEmailForm />
+          </section>
+        </div>
         <aside className="border border-navy/20 p-6 lg:self-start">
           <h2 className="text-sm uppercase tracking-[0.18em]">Datos</h2>
           <ul className="mt-4 space-y-2 text-sm leading-relaxed">
@@ -38,17 +50,6 @@ export default async function ContactoPage({ searchParams }: Props) {
               <li>
                 <a href={`mailto:${contacto.email.trim()}`}>
                   {contacto.email.trim()}
-                </a>
-              </li>
-            ) : null}
-            {canales.whatsapp ? (
-              <li>
-                <a
-                  href={`https://wa.me/${contacto.whatsapp.trim()}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  WhatsApp
                 </a>
               </li>
             ) : null}
@@ -70,12 +71,6 @@ export default async function ContactoPage({ searchParams }: Props) {
               )}
             </li>
           </ul>
-          <div className="mt-10">
-            <h3 className="text-sm uppercase tracking-[0.18em]">Newsletter</h3>
-            <div className="mt-4">
-              <NewsletterForm variant="page" />
-            </div>
-          </div>
         </aside>
       </div>
     </>

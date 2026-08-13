@@ -55,11 +55,11 @@ export function SiteFooter() {
       <div className="mx-auto grid max-w-6xl gap-10 px-4 py-12 md:grid-cols-2 lg:grid-cols-4">
         <div>
           <Image
-            src="/logo-gemba.png"
+            src="/logo-gemba-blanco.png"
             alt="Estudio Gemba"
-            width={937}
-            height={582}
-            className="logo-footer mb-4 h-10 w-auto"
+            width={986}
+            height={597}
+            className="mb-4 h-12 w-auto"
           />
           <p className="text-sm leading-relaxed text-white">
             Ingeniería y optimización de procesos para PyMEs industriales.
@@ -122,15 +122,36 @@ export function SiteFooter() {
         </div>
 
         <div>
-          <h2 className="text-xs font-medium uppercase tracking-[0.2em]">Newsletter</h2>
-          <p className="mt-4 mb-4 text-sm">Novedades del estudio.</p>
+          <h2 className="text-xs font-medium uppercase tracking-[0.2em]">
+            <Link
+              href="/newsletter"
+              className="focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+            >
+              Boletín de Industria
+            </Link>
+          </h2>
+          <p className="mt-4 mb-4 text-sm">
+            Notas de planta e indicadores. Suscripción gratuita. WhatsApp o
+            email.
+          </p>
           <NewsletterForm variant="footer" />
         </div>
       </div>
       <div className="border-t border-white/20">
-        <p className="mx-auto max-w-6xl px-4 py-4 text-sm">
-          © {year} Estudio Gemba
-        </p>
+        <div className="mx-auto flex max-w-6xl flex-col gap-2 px-4 py-4 text-sm sm:flex-row sm:items-center sm:justify-between">
+          <p>© {year} Estudio Gemba</p>
+          <p>
+            Desarrollado por{" "}
+            <a
+              href="https://www.instagram.com/vexelstudios/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline underline-offset-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+            >
+              Vexelstudios
+            </a>
+          </p>
+        </div>
       </div>
     </footer>
   );

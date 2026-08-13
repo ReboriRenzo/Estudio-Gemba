@@ -21,9 +21,21 @@ export type NewsletterPayload = {
   nombre: string;
   email: string;
   sector: string;
+  preferencia: PreferenciaRespuesta;
 };
 
-export type ConsultaPayload = PresupuestoPayload | NewsletterPayload;
+export type ConsultaEmailPayload = {
+  tipo: "consulta";
+  empresa: string;
+  nombre: string;
+  email: string;
+  mensaje: string;
+};
+
+export type ConsultaPayload =
+  | PresupuestoPayload
+  | NewsletterPayload
+  | ConsultaEmailPayload;
 export type FieldErrors = Record<string, string>;
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -40,6 +52,16 @@ function asRecord(body: unknown): Record<string, unknown> | null {
 
 function readString(value: unknown): string {
   return typeof value === "string" ? value.trim() : "";
+}
+
+function readPreferencia(
+  value: unknown,
+  errors: FieldErrors,
+): PreferenciaRespuesta | "" {
+  const raw = readString(value);
+  if (raw === "email" || raw === "whatsapp") return raw;
+  errors.preferencia = ERROR_REQUERIDO;
+  return "";
 }
 
 function validateEmailField(email: string, errors: FieldErrors) {
@@ -68,7 +90,7 @@ export function validateConsulta(
     const planta = readString(rec.planta);
     const servicio = readString(rec.servicio);
     const mensaje = readString(rec.mensaje);
-    const preferenciaRaw = readString(rec.preferencia);
+    const preferencia = readPreferencia(rec.preferencia, errors);
 
     if (!empresa) errors.empresa = ERROR_REQUERIDO;
     if (!nombre) errors.nombre = ERROR_REQUERIDO;
@@ -86,13 +108,6 @@ export function validateConsulta(
       errors.mensaje = ERROR_REQUERIDO;
     } else if (mensaje.length > 2000) {
       errors.mensaje = ERROR_MENSAJE;
-    }
-
-    let preferencia: PreferenciaRespuesta | "" = "";
-    if (preferenciaRaw === "email" || preferenciaRaw === "whatsapp") {
-      preferencia = preferenciaRaw;
-    } else {
-      errors.preferencia = ERROR_REQUERIDO;
     }
 
     if (Object.keys(errors).length > 0 || preferencia === "") {
@@ -121,15 +136,45 @@ export function validateConsulta(
     const nombre = readString(rec.nombre);
     const email = readString(rec.email);
     const sector = typeof rec.sector === "string" ? rec.sector.trim() : "";
+    const preferencia = readPreferencia(rec.preferencia, errors);
 
     if (!nombre) errors.nombre = ERROR_REQUERIDO;
     validateEmailField(email, errors);
+
+    if (Object.keys(errors).length > 0 || preferencia === "") {
+      return { ok: false, errors };
+    }
+
+    return {
+      ok: true,
+      data: { tipo: "newsletter", nombre, email, sector, preferencia },
+    };
+  }
+
+  if (rec.tipo === "consulta") {
+    const errors: FieldErrors = {};
+    const empresa = readString(rec.empresa);
+    const nombre = readString(rec.nombre);
+    const email = readString(rec.email);
+    const mensaje = readString(rec.mensaje);
+
+    if (!empresa) errors.empresa = ERROR_REQUERIDO;
+    if (!nombre) errors.nombre = ERROR_REQUERIDO;
+    validateEmailField(email, errors);
+    if (!mensaje) {
+      errors.mensaje = ERROR_REQUERIDO;
+    } else if (mensaje.length > 2000) {
+      errors.mensaje = ERROR_MENSAJE;
+    }
 
     if (Object.keys(errors).length > 0) {
       return { ok: false, errors };
     }
 
-    return { ok: true, data: { tipo: "newsletter", nombre, email, sector } };
+    return {
+      ok: true,
+      data: { tipo: "consulta", empresa, nombre, email, mensaje },
+    };
   }
 
   return { ok: false, errors: { tipo: ERROR_REQUERIDO } };
@@ -151,16 +196,41 @@ export function formatConsultaText(data: ConsultaPayload): string {
     ].join("\n");
   }
 
+  if (data.tipo === "newsletter") {
+    return formatNewsletterWhatsApp(data);
+  }
+
   return [
-    "Tipo: newsletter",
+    "Tipo: consulta",
+    `Empresa: ${data.empresa}`,
     `Nombre: ${data.nombre}`,
     `Email: ${data.email}`,
-    `Sector: ${data.sector}`,
+    `Mensaje: ${data.mensaje}`,
   ].join("\n");
+}
+
+export function formatNewsletterWhatsApp(data: NewsletterPayload): string {
+  const canal = data.preferencia === "whatsapp" ? "WhatsApp" : "email";
+  const lineas = [
+    "Hola, quiero suscribirme al boletín de industria de Estudio Gemba.",
+    "",
+    `Nombre: ${data.nombre}`,
+    `Email: ${data.email}`,
+  ];
+  if (data.sector) {
+    lineas.push(`Sector: ${data.sector}`);
+  }
+  lineas.push(`Canal: ${canal}`);
+  lineas.push("", "Quedo atento para coordinar por acá.");
+  return lineas.join("\n");
 }
 
 export function buildWhatsAppUrl(phoneE164: string, text: string): string {
   return `https://wa.me/${phoneE164.trim()}?text=${encodeURIComponent(text)}`;
+}
+
+export function buildMailtoUrl(to: string, subject: string, text: string): string {
+  return `mailto:${to.trim()}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(text)}`;
 }
 
 export type SendEmail = (args: {
@@ -172,6 +242,7 @@ export type SendEmail = (args: {
 export type EnvioResultado =
   | { kind: "emailed" }
   | { kind: "whatsapp"; url: string }
+  | { kind: "mailto"; url: string }
   | { kind: "queued" }
   | { kind: "provider_error" };
 
@@ -183,18 +254,64 @@ export async function resolverEnvio(
   const text = formatConsultaText(data);
   const emailDestino = contacto.email.trim();
   const whatsapp = contacto.whatsapp.trim();
-  const intentaEmail =
-    data.tipo === "newsletter" ||
-    (data.tipo === "presupuesto" && data.preferencia === "email");
+
+  if (data.tipo === "newsletter") {
+    const text = formatNewsletterWhatsApp(data);
+
+    if (data.preferencia === "whatsapp") {
+      if (whatsapp) {
+        return { kind: "whatsapp", url: buildWhatsAppUrl(whatsapp, text) };
+      }
+      opts.log?.(data);
+      return { kind: "queued" };
+    }
+
+    const subject = `Boletín de Industria — ${data.nombre}`;
+    if (emailDestino && opts.sendEmail) {
+      try {
+        await opts.sendEmail({ to: emailDestino, subject, text });
+        return { kind: "emailed" };
+      } catch {
+        return { kind: "provider_error" };
+      }
+    }
+    if (emailDestino) {
+      return { kind: "mailto", url: buildMailtoUrl(emailDestino, subject, text) };
+    }
+    opts.log?.(data);
+    return { kind: "queued" };
+  }
+
+  if (data.tipo === "consulta") {
+    const subject = `Consulta — ${data.empresa}`;
+    if (emailDestino && opts.sendEmail) {
+      try {
+        await opts.sendEmail({ to: emailDestino, subject, text });
+        return { kind: "emailed" };
+      } catch {
+        return { kind: "provider_error" };
+      }
+    }
+    if (emailDestino) {
+      return {
+        kind: "mailto",
+        url: buildMailtoUrl(emailDestino, subject, text),
+      };
+    }
+    opts.log?.(data);
+    return { kind: "queued" };
+  }
+
+  const intentaEmail = data.preferencia === "email";
 
   if (intentaEmail) {
     if (emailDestino && opts.sendEmail) {
       try {
-        const subject =
-          data.tipo === "presupuesto"
-            ? `Presupuesto — ${data.empresa}`
-            : `Newsletter — ${data.nombre}`;
-        await opts.sendEmail({ to: emailDestino, subject, text });
+        await opts.sendEmail({
+          to: emailDestino,
+          subject: `Presupuesto — ${data.empresa}`,
+          text,
+        });
         return { kind: "emailed" };
       } catch {
         return { kind: "provider_error" };
@@ -202,9 +319,7 @@ export async function resolverEnvio(
     }
   }
 
-  const intentaWhatsapp =
-    (data.tipo === "presupuesto" && data.preferencia === "whatsapp") ||
-    intentaEmail;
+  const intentaWhatsapp = data.preferencia === "whatsapp" || intentaEmail;
 
   if (intentaWhatsapp && whatsapp) {
     return { kind: "whatsapp", url: buildWhatsAppUrl(whatsapp, text) };

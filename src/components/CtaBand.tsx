@@ -11,7 +11,7 @@ export function CtaBand({ title, href }: { title: string; href: string }) {
           href={href}
           className="border border-white px-6 py-3 text-sm uppercase tracking-[0.12em]"
         >
-          Solicitar presupuesto
+          Contacto
         </Link>
       </div>
     </section>

@@ -56,6 +56,9 @@ export async function POST(request: Request) {
   if (result.kind === "whatsapp") {
     return NextResponse.json({ ok: true, whatsappUrl: result.url });
   }
+  if (result.kind === "mailto") {
+    return NextResponse.json({ ok: true, mailtoUrl: result.url });
+  }
   if (result.kind === "emailed") {
     return NextResponse.json({ ok: true, emailed: true });
   }
