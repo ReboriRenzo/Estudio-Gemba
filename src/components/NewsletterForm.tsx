@@ -176,7 +176,6 @@ export function NewsletterForm() {
       <button
         type="submit"
         disabled={status === "submitting"}
-        className={
         className="w-fit border border-navy bg-navy px-6 py-3 text-sm uppercase tracking-[0.12em] text-white transition-colors hover:bg-transparent hover:text-navy disabled:opacity-60"
       >
         {status === "submitting" ? "Enviando…" : "Suscribirme"}
