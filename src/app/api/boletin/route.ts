@@ -28,8 +28,7 @@ function errorGuardado() {
   return NextResponse.json(
     {
       ok: false,
-      message:
-        "No se pudo guardar. En local funciona; si el sitio está en la nube, usá el panel en esta computadora o editá data/boletin-noticias.json.",
+      message: "No se pudo guardar. Reintentá en unos segundos.",
     },
     { status: 503 },
   );
@@ -39,7 +38,11 @@ export async function GET() {
   if (!(await haySesion())) {
     return NextResponse.json({ ok: false, sesion: false }, { status: 401 });
   }
-  return NextResponse.json({ ok: true, sesion: true, noticias: leerNoticias() });
+  return NextResponse.json({
+    ok: true,
+    sesion: true,
+    noticias: await leerNoticias(),
+  });
 }
 
 export async function POST(request: Request) {
@@ -95,7 +98,7 @@ export async function POST(request: Request) {
     const bytes = Buffer.from(await file.arrayBuffer());
 
     try {
-      guardarBytesArchivo(nombreGuardado, bytes);
+      await guardarBytesArchivo(nombreGuardado, bytes);
       const noticias = [
         {
           id,
@@ -106,12 +109,13 @@ export async function POST(request: Request) {
           fecha: typeof fecha === "string" ? fecha.trim() : "",
           nombreArchivo: file.name,
         },
-        ...leerNoticias(),
+        ...(await leerNoticias()),
       ];
-      guardarNoticias(noticias);
+      await guardarNoticias(noticias);
       return NextResponse.json({ ok: true, noticias });
-    } catch {
-      borrarArchivoPublicado(`/boletin/archivos/${nombreGuardado}`);
+    } catch (error) {
+      console.error(error);
+      await borrarArchivoPublicado(`/boletin/archivos/${nombreGuardado}`);
       return errorGuardado();
     }
   }
@@ -141,7 +145,11 @@ export async function POST(request: Request) {
     if (!claveCorrecta(clave)) {
       return NextResponse.json({ ok: false, message: "Clave incorrecta." }, { status: 401 });
     }
-    const res = NextResponse.json({ ok: true, sesion: true, noticias: leerNoticias() });
+    const res = NextResponse.json({
+      ok: true,
+      sesion: true,
+      noticias: await leerNoticias(),
+    });
     res.cookies.set(BOLETIN_COOKIE, tokenSesion(boletinAcceso.clave.trim()), {
       httpOnly: true,
       sameSite: "lax",
@@ -167,15 +175,16 @@ export async function POST(request: Request) {
     if (!id) {
       return NextResponse.json({ ok: false, message: "Falta la nota." }, { status: 400 });
     }
-    const actual = leerNoticias();
+    const actual = await leerNoticias();
     const baja = actual.find((item) => item.id === id);
     const noticias = actual.filter((item) => item.id !== id);
     try {
       if (baja) {
-        borrarArchivoPublicado(baja.url);
+        await borrarArchivoPublicado(baja.url);
       }
-      guardarNoticias(noticias);
-    } catch {
+      await guardarNoticias(noticias);
+    } catch (error) {
+      console.error(error);
       return errorGuardado();
     }
     return NextResponse.json({ ok: true, noticias });

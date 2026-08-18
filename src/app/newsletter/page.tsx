@@ -50,9 +50,9 @@ const TEMAS = [
   "Inventario en proceso",
 ] as const;
 
-export default function NewsletterPage() {
+export default async function NewsletterPage() {
   const temas = [...TEMAS, ...TEMAS];
-  const noticias = leerNoticias();
+  const noticias = await leerNoticias();
 
   return (
     <>
