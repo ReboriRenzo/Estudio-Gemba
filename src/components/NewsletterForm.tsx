@@ -3,10 +3,6 @@
 import { useState, type FormEvent } from "react";
 import type { PreferenciaRespuesta } from "@/lib/consulta";
 
-type NewsletterFormProps = {
-  variant: "page" | "footer";
-};
-
 type FieldErrors = Record<string, string>;
 
 const ERROR_ENVIO =
@@ -18,7 +14,7 @@ const EXITO_MAILTO = "Se abrió tu cliente de correo con la suscripción.";
 const EXITO_WPP =
   "Te abrimos WhatsApp con tus datos para coordinar la suscripción.";
 
-export function NewsletterForm({ variant }: NewsletterFormProps) {
+export function NewsletterForm() {
   const [nombre, setNombre] = useState("");
   const [email, setEmail] = useState("");
   const [sector, setSector] = useState("");
@@ -29,12 +25,9 @@ export function NewsletterForm({ variant }: NewsletterFormProps) {
   );
   const [message, setMessage] = useState("");
 
-  const isFooter = variant === "footer";
-  const fieldClass = isFooter
-    ? "mt-1 w-full rounded-none border border-white bg-navy px-3 py-2 text-sm text-white"
-    : "mt-1 w-full rounded-none border border-navy bg-white px-3 py-2 text-sm text-navy";
-  const labelClass = isFooter ? "text-sm text-white" : "text-sm text-navy";
-  const radioClass = isFooter ? "accent-white" : "accent-navy";
+  const fieldClass =
+    "mt-1 w-full rounded-none border border-navy bg-white px-3 py-2 text-sm text-navy";
+  const labelClass = "text-sm text-navy";
   const errorClass = "mt-1 text-sm";
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
@@ -51,7 +44,7 @@ export function NewsletterForm({ variant }: NewsletterFormProps) {
           tipo: "newsletter",
           nombre,
           email,
-          sector: isFooter ? "" : sector,
+          sector,
           preferencia,
         }),
       });
@@ -101,17 +94,17 @@ export function NewsletterForm({ variant }: NewsletterFormProps) {
   }
 
   if (status === "success") {
-    return <p className={isFooter ? "text-sm text-white" : "text-sm text-navy"}>{message}</p>;
+    return <p className="text-sm text-navy">{message}</p>;
   }
 
   return (
     <form onSubmit={onSubmit} noValidate className="flex flex-col gap-3">
       <div>
-        <label htmlFor={`newsletter-nombre-${variant}`} className={labelClass}>
+        <label htmlFor="newsletter-nombre" className={labelClass}>
           Nombre
         </label>
         <input
-          id={`newsletter-nombre-${variant}`}
+          id="newsletter-nombre"
           name="nombre"
           type="text"
           autoComplete="name"
@@ -122,11 +115,11 @@ export function NewsletterForm({ variant }: NewsletterFormProps) {
         {errors.nombre ? <p className={errorClass}>{errors.nombre}</p> : null}
       </div>
       <div>
-        <label htmlFor={`newsletter-email-${variant}`} className={labelClass}>
+        <label htmlFor="newsletter-email" className={labelClass}>
           Email
         </label>
         <input
-          id={`newsletter-email-${variant}`}
+          id="newsletter-email"
           name="email"
           type="email"
           autoComplete="email"
@@ -136,13 +129,12 @@ export function NewsletterForm({ variant }: NewsletterFormProps) {
         />
         {errors.email ? <p className={errorClass}>{errors.email}</p> : null}
       </div>
-      {!isFooter ? (
         <div>
-          <label htmlFor={`newsletter-sector-${variant}`} className={labelClass}>
+          <label htmlFor="newsletter-sector" className={labelClass}>
             Sector / rubro industrial (opcional)
           </label>
           <input
-            id={`newsletter-sector-${variant}`}
+            id="newsletter-sector"
             name="sector"
             type="text"
             value={sector}
@@ -150,29 +142,28 @@ export function NewsletterForm({ variant }: NewsletterFormProps) {
             className={fieldClass}
           />
         </div>
-      ) : null}
       <fieldset>
         <legend className={labelClass}>Contactar por</legend>
         <div className="mt-2 flex flex-wrap gap-4">
           <label className={`inline-flex items-center gap-2 ${labelClass}`}>
             <input
               type="radio"
-              name={`newsletter-preferencia-${variant}`}
+              name="newsletter-preferencia"
               value="email"
               checked={preferencia === "email"}
               onChange={() => setPreferencia("email")}
-              className={radioClass}
+              className="accent-navy"
             />
             Email
           </label>
           <label className={`inline-flex items-center gap-2 ${labelClass}`}>
             <input
               type="radio"
-              name={`newsletter-preferencia-${variant}`}
+              name="newsletter-preferencia"
               value="whatsapp"
               checked={preferencia === "whatsapp"}
               onChange={() => setPreferencia("whatsapp")}
-              className={radioClass}
+              className="accent-navy"
             />
             WhatsApp
           </label>
@@ -186,10 +177,7 @@ export function NewsletterForm({ variant }: NewsletterFormProps) {
         type="submit"
         disabled={status === "submitting"}
         className={
-          isFooter
-            ? "rounded-none border border-white bg-white px-4 py-2 text-sm text-navy disabled:opacity-60"
-            : "rounded-none bg-navy px-4 py-2 text-sm text-white disabled:opacity-60"
-        }
+        className="w-fit border border-navy bg-navy px-6 py-3 text-sm uppercase tracking-[0.12em] text-white transition-colors hover:bg-transparent hover:text-navy disabled:opacity-60"
       >
         {status === "submitting" ? "Enviando…" : "Suscribirme"}
       </button>

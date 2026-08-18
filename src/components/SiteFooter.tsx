@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { canalesDisponibles, contacto } from "@/lib/contacto";
 import { SERVICIOS } from "@/lib/servicios";
-import { NewsletterForm } from "@/components/NewsletterForm";
+import { BotonSitio } from "@/components/BotonSitio";
 
 function LinkedInMark() {
   return (
@@ -55,14 +55,15 @@ export function SiteFooter() {
       <div className="mx-auto grid max-w-6xl gap-10 px-4 py-12 md:grid-cols-2 lg:grid-cols-4">
         <div>
           <Image
-            src="/logo-gemba-blanco.png"
-            alt="Estudio Gemba"
-            width={986}
-            height={597}
+            src="/logo-firmind-blanco.png"
+            alt="FIRMIND"
+            width={1834}
+            height={725}
             className="mb-4 h-12 w-auto"
           />
           <p className="text-sm leading-relaxed text-white">
-            Ingeniería y optimización de procesos para PyMEs industriales.
+            Optimización de procesos con datos de planta, no con métodos
+            genéricos.
           </p>
           <Link
             href="/sobre-nosotros"
@@ -111,7 +112,7 @@ export function SiteFooter() {
                   rel="noopener noreferrer"
                   className="focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
                 >
-                  WhatsApp
+                  +54 9 11 2764-2266
                 </a>
               </li>
             ) : null}
@@ -130,16 +131,16 @@ export function SiteFooter() {
               Boletín de Industria
             </Link>
           </h2>
-          <p className="mt-4 mb-4 text-sm">
-            Notas de planta e indicadores. Suscripción gratuita. WhatsApp o
-            email.
+          <p className="mt-4 mb-6 text-sm">
+            Los datos del sector, traducidos a decisiones de planta. Una vez
+            por mes.
           </p>
-          <NewsletterForm variant="footer" />
+          <BotonSitio href="/newsletter">Suscribirme</BotonSitio>
         </div>
       </div>
       <div className="border-t border-white/20">
         <div className="mx-auto flex max-w-6xl flex-col gap-2 px-4 py-4 text-sm sm:flex-row sm:items-center sm:justify-between">
-          <p>© {year} Estudio Gemba</p>
+          <p>© {year} FIRMIND</p>
           <p>
             Desarrollado por{" "}
             <a

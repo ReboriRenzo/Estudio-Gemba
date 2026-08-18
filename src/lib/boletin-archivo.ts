@@ -20,7 +20,7 @@ const archivoLista = path.join(process.cwd(), "data", "boletin-noticias.json");
 const dirArchivos = path.join(process.cwd(), "public", "boletin", "archivos");
 
 export function tokenSesion(clave: string) {
-  return createHmac("sha256", clave).update("estudio-gemba-boletin").digest("hex");
+  return createHmac("sha256", clave).update("firmind-boletin").digest("hex");
 }
 
 export function sesionValida(token: string | undefined): boolean {

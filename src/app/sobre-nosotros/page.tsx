@@ -2,11 +2,13 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { CtaBand } from "@/components/CtaBand";
 import { MethodSteps } from "@/components/MethodSteps";
+import { VocabularioMarquee } from "@/components/VocabularioMarquee";
+import { MARQUESINA_SOBRE } from "@/lib/marquesinas";
 
 export const metadata: Metadata = {
   title: "Sobre nosotros",
   description:
-    "Estudio técnico de ingeniería y optimización de procesos para PyMEs industriales. Diagnóstico con OEE, scrap y tiempos muertos. Zona Sur, Buenos Aires.",
+    "Red de especialistas en optimización de procesos para PyMEs industriales. Diagnóstico en planta, alcance cerrado y presencia decreciente.",
 };
 
 export default function SobreNosotrosPage() {
@@ -15,7 +17,7 @@ export default function SobreNosotrosPage() {
       <header className="relative min-h-[70vh] overflow-hidden bg-navy text-white">
         <Image
           src="/sobre/planta.png"
-          alt="Nave industrial: el trabajo de Estudio Gemba empieza en el piso de planta"
+          alt="Nave industrial: el diagnóstico de FIRMIND se hace en planta"
           fill
           priority
           className="object-cover grayscale"
@@ -24,17 +26,23 @@ export default function SobreNosotrosPage() {
         <div className="absolute inset-0 bg-navy/65" />
         <div className="relative mx-auto flex min-h-[70vh] max-w-6xl flex-col justify-end px-4 py-16 md:py-24">
           <p className="text-xs uppercase tracking-[0.28em] text-white/80">
-            Estudio técnico · Zona Sur · Buenos Aires
+            Estudio técnico · Buenos Aires
           </p>
           <h1 className="mt-4 max-w-4xl text-3xl font-medium uppercase tracking-[0.14em] md:text-5xl md:leading-tight">
-            El problema se ve y se mide en Gemba
+            Optimización de procesos con datos de planta, no con métodos
+            genéricos
           </h1>
           <p className="mt-6 max-w-2xl text-lg leading-relaxed text-white/90">
-            Ingeniería práctica para PyMEs industriales. Diagnóstico numérico,
-            implementación en la línea y seguimiento con indicadores reales.
+            Para dueños y directores de PyMEs industriales que quieren saber qué
+            está limitando su resultado.
           </p>
         </div>
       </header>
+
+      <VocabularioMarquee
+        terms={MARQUESINA_SOBRE}
+        label="Vocabulario de FIRMIND"
+      />
 
       <section className="border-b border-navy/15">
         <div className="mx-auto grid max-w-6xl gap-12 px-4 py-20 lg:grid-cols-12">
@@ -43,21 +51,18 @@ export default function SobreNosotrosPage() {
           </p>
           <div className="lg:col-span-9">
             <h2 className="text-2xl font-medium uppercase tracking-[0.12em] md:text-3xl">
-              Un estudio técnico, no una consultora de slides
+              Una red de especialistas, con alcance cerrado
             </h2>
             <div className="mt-8 max-w-3xl space-y-5 text-base leading-relaxed md:text-lg">
               <p>
-                Estudio Gemba se especializa en la optimización de procesos
-                productivos de PyMEs industriales. El punto de partida no es un
-                modelo teórico: son los datos duros de la operación — OEE, tasas
-                de scrap, tiempos muertos, paradas y cuellos de botella.
+                Somos una red de especialistas que trabaja en distintas áreas
+                según lo que requiera el proyecto. El diagnóstico lo hacemos en
+                planta, con medición propia.
               </p>
               <p>
-                En lugar de aplicar soluciones genéricas, priorizamos el
-                diagnóstico numérico, la ingeniería práctica y herramientas de
-                mejora continua diseñadas para ingenieros, jefes de planta y
-                directores de operaciones que necesitan resultados medibles en
-                la línea.
+                Trabajamos con alcance cerrado, criterio de éxito acordado por
+                escrito y presencia decreciente: si al año seguimos siendo
+                necesarios, el trabajo no cumplió su objetivo.
               </p>
             </div>
           </div>
@@ -68,62 +73,37 @@ export default function SobreNosotrosPage() {
         <div className="mx-auto grid max-w-6xl gap-8 px-4 py-10 lg:grid-cols-2 lg:gap-12 lg:py-14">
           <div className="relative min-h-[280px] overflow-hidden lg:min-h-[480px]">
             <Image
-              src="/sobre/linea.png"
-              alt="Detalle de línea de producción y registros de planta"
+              src="/sobre/matias.png"
+              alt="Matías Emanuel Acuña, fundador de FIRMIND"
               fill
-              className="object-cover grayscale"
+              className="object-cover object-[center_20%]"
               sizes="(min-width: 1024px) 50vw, 100vw"
             />
           </div>
           <div className="flex flex-col justify-center py-4 lg:py-8">
-            <p className="text-xs uppercase tracking-[0.22em]">02 — Por qué Gemba</p>
+            <p className="text-xs uppercase tracking-[0.22em]">
+              02 — Matías Emanuel Acuña
+            </p>
             <h2 className="mt-4 text-2xl font-medium uppercase tracking-[0.12em]">
-              La planta no se entiende desde el escritorio
+              El diagnóstico lo hago yo, en planta
             </h2>
             <p className="mt-6 text-base leading-relaxed">
-              Gemba es el lugar real donde ocurre el trabajo. Ahí se ven las
-              pérdidas, se contrastan los registros y se prueba lo que después
-              queda como estándar. Un informe sin piso es un documento; un
-              contrapunto medido en la línea es un cambio de operación.
+              Ingeniero industrial. Cinco años como ingeniero de procesos
+              trabajando con Lean y TPM, los últimos en Essity antes de fundar
+              FIRMIND.
             </p>
             <p className="mt-4 text-base leading-relaxed">
-              Por eso el estudio no vende un programa genérico de “mejora
-              continua”. Primero se construye un baseline compartido. Después se
-              interviene. Al final se sigue el número, no la percepción.
+              Conozco el lado de adentro: las decisiones que se toman a las
+              siete de la mañana con la mitad de la información, y los problemas
+              que todos ven y no se resuelven.
             </p>
-          </div>
-        </div>
-      </section>
-
-      <section className="border-b border-navy/15">
-        <div className="mx-auto max-w-6xl px-4 py-16">
-          <p className="text-xs uppercase tracking-[0.22em]">Vocabulario de planta</p>
-          <div className="mt-8 grid gap-px bg-navy/15 sm:grid-cols-2 lg:grid-cols-4">
-            {[
-              {
-                term: "OEE",
-                body: "Disponibilidad, rendimiento y calidad en un solo indicador de la línea.",
-              },
-              {
-                term: "Scrap",
-                body: "Merma y retrabajo que el costo esconde si no se mide con disciplina.",
-              },
-              {
-                term: "Tiempos muertos",
-                body: "Paradas, esperas y setups que comen capacidad instalada.",
-              },
-              {
-                term: "Disponibilidad",
-                body: "Tiempo en que la máquina realmente puede producir, no el tiempo teórico.",
-              },
-            ].map((item) => (
-              <div key={item.term} className="bg-white p-6">
-                <h3 className="text-sm font-medium uppercase tracking-[0.16em]">
-                  {item.term}
-                </h3>
-                <p className="mt-3 text-sm leading-relaxed">{item.body}</p>
-              </div>
-            ))}
+            <p className="mt-4 text-base leading-relaxed">
+              Cinco días completos, midiendo antes de proponer nada. Cuando el
+              proyecto requiere otra especialidad, sumo al profesional que
+              corresponda y lo aviso antes. No traigo un programa armado de
+              antemano: traigo un método para encontrar qué está limitando el
+              resultado y cuánto cuesta eso por mes.
+            </p>
           </div>
         </div>
       </section>
@@ -131,19 +111,22 @@ export default function SobreNosotrosPage() {
       <section className="border-b border-navy/15">
         <div className="mx-auto grid max-w-6xl gap-8 px-4 py-10 lg:grid-cols-2 lg:gap-12 lg:py-14">
           <div className="order-2 flex flex-col justify-center py-4 lg:order-1 lg:py-8">
-            <p className="text-xs uppercase tracking-[0.22em]">03 — Cómo trabajamos</p>
+            <p className="text-xs uppercase tracking-[0.22em]">
+              03 — Cómo se contrata
+            </p>
             <h2 className="mt-4 text-2xl font-medium uppercase tracking-[0.12em]">
-              Datos primero. Implementación después.
+              Las fases se contratan por separado
             </h2>
             <p className="mt-6 text-base leading-relaxed">
-              El método es deliberadamente austero: relevamiento en planta y de
-              registros, mapa de pérdidas priorizado, contrapuntos en Gemba y
-              cadencia de revisión con responsables de turno.
+              La Fase 1 no obliga a continuar y se entrega completa aunque la
+              empresa decida no avanzar. El programa integral se estructura
+              sobre 12 meses, con dedicación decreciente establecida
+              contractualmente desde el inicio.
             </p>
             <p className="mt-4 text-base leading-relaxed">
-              El entregable no es un deck. Es un baseline, un plan que se puede
-              ejecutar y un rutinario que la planta puede sostener cuando el
-              estudio no está.
+              La presencia decrece por diseño. Las primeras recomendaciones son
+              siempre las que no cuestan dinero. Comprar equipamiento es lo
+              último, y con frecuencia resulta que no hace falta.
             </p>
           </div>
           <div className="relative order-1 min-h-[280px] overflow-hidden lg:order-2 lg:min-h-[480px]">
@@ -162,7 +145,7 @@ export default function SobreNosotrosPage() {
         <div className="mx-auto max-w-6xl px-4 py-20">
           <p className="text-xs uppercase tracking-[0.22em]">04 — Método</p>
           <h2 className="mt-4 mb-10 text-2xl font-medium uppercase tracking-[0.12em]">
-            Cuatro pasos, siempre los mismos
+            Tres fases, presencia decreciente
           </h2>
           <MethodSteps />
         </div>
@@ -173,26 +156,23 @@ export default function SobreNosotrosPage() {
           <article className="bg-white px-4 py-14 md:px-10">
             <h2 className="text-sm uppercase tracking-[0.18em]">Para quién</h2>
             <p className="mt-5 text-base leading-relaxed">
-              PyMEs industriales. Ingenieros, jefes de planta y directores de
-              operaciones que necesitan un punto de partida medible. No un
-              programa TPM corporativo para plantas ya maduras como único
-              cliente.
+              Dueños y directores de PyMEs industriales que quieren saber qué
+              está limitando su resultado, y cuánto cuesta eso por mes.
             </p>
           </article>
           <article className="bg-white px-4 py-14 md:px-10">
-            <h2 className="text-sm uppercase tracking-[0.18em]">Dónde</h2>
+            <h2 className="text-sm uppercase tracking-[0.18em]">Garantía</h2>
             <p className="mt-5 text-base leading-relaxed">
-              Operamos en Zona Sur, Buenos Aires. También trabajamos en el resto
-              de Argentina bajo coordinación, cuando el diagnóstico y la
-              implementación lo requieren.
+              Si en el diagnóstico no se identifica una oportunidad verificable
+              de al menos cinco veces el honorario, no se factura.
             </p>
           </article>
           <article className="bg-white px-4 py-14 md:px-10">
             <h2 className="text-sm uppercase tracking-[0.18em]">Qué no hacemos</h2>
             <p className="mt-5 text-base leading-relaxed">
-              No aplicamos recetas genéricas, no auditamos para el informe
-              cosmético y no sustituimos al equipo de planta. El cambio queda en
-              quienes operan la línea.
+              Si después del diagnóstico el problema resulta ser comercial o
+              financiero y no operativo, lo decimos y no se factura. No
+              vendemos un programa armado de antemano.
             </p>
           </article>
         </div>

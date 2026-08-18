@@ -28,14 +28,28 @@ describe("validateNoticia", () => {
     expect(r.ok).toBe(false);
     if (!r.ok) expect(r.errors.titulo).toBe("Completá este campo.");
   });
+
+  it("rechaza imagen como archivo de descarga", () => {
+    const r = validateNoticia({
+      titulo: "Foto",
+      url: "/boletin/archivos/abc.png",
+      nombreArchivo: "portada.png",
+    });
+    expect(r.ok).toBe(false);
+    if (!r.ok) {
+      expect(r.errors.archivo).toMatch(/No se permiten imágenes/);
+    }
+  });
 });
 
 describe("extensionPermitida", () => {
-  it("permite pdf y otros documentos, rechaza ejecutables", () => {
+  it("permite documentos y rechaza imágenes y ejecutables", () => {
     expect(extensionPermitida("nota.pdf")).toBe(true);
     expect(extensionPermitida("nota.PDF")).toBe(true);
     expect(extensionPermitida("plan.xlsx")).toBe(true);
-    expect(extensionPermitida("foto.png")).toBe(true);
+    expect(extensionPermitida("foto.png")).toBe(false);
+    expect(extensionPermitida("portada.JPG")).toBe(false);
+    expect(extensionPermitida("nota.webp")).toBe(false);
     expect(extensionPermitida("malware.exe")).toBe(false);
   });
 });

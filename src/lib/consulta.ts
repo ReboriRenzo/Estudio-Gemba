@@ -212,7 +212,7 @@ export function formatConsultaText(data: ConsultaPayload): string {
 export function formatNewsletterWhatsApp(data: NewsletterPayload): string {
   const canal = data.preferencia === "whatsapp" ? "WhatsApp" : "email";
   const lineas = [
-    "Hola, quiero suscribirme al boletín de industria de Estudio Gemba.",
+    "Hola, quiero suscribirme al boletín de industria de FIRMIND.",
     "",
     `Nombre: ${data.nombre}`,
     `Email: ${data.email}`,

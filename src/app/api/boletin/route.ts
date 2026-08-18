@@ -13,6 +13,7 @@ import {
 import {
   boletinAcceso,
   claveConfigurada,
+  ERROR_ARCHIVO,
   extensionDe,
   extensionPermitida,
   TAMANIO_MAX_ARCHIVO,
@@ -82,7 +83,7 @@ export async function POST(request: Request) {
       return NextResponse.json(
         {
           ok: false,
-          errors: { archivo: "Subí un archivo. PDF, Word, Excel, imagen u otro documento." },
+          errors: { archivo: ERROR_ARCHIVO },
         },
         { status: 400 },
       );

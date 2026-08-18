@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { NewsletterForm } from "@/components/NewsletterForm";
+import { BotonSitio } from "@/components/BotonSitio";
 
 export function NewsletterSection({
   heading = "h2",
@@ -32,13 +32,13 @@ export function NewsletterSection({
           >
             Boletín de Industria
           </Title>
-          <p className="mt-4 max-w-xl text-base leading-relaxed">
-            Suscripción gratuita. Completá el formulario y elegí WhatsApp o
-            email para coordinar el alta.
+          <p className="mt-4 mb-8 max-w-xl text-base leading-relaxed">
+            Los datos del sector, traducidos a decisiones de planta. Una vez
+            por mes. Suscripción gratuita.
           </p>
-          <div className="mt-8 border border-navy/20 bg-white p-6 md:p-8">
-            <NewsletterForm variant="page" />
-          </div>
+          <BotonSitio href="/newsletter" tono="paper">
+            Suscribirme
+          </BotonSitio>
         </div>
       </div>
     </section>

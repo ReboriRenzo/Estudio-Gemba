@@ -98,12 +98,55 @@ select:focus-visible {
   }
 }
 
+@keyframes cta-kenburns {
+  0% {
+    transform: scale(1.08) translate3d(0, 0, 0);
+  }
+  50% {
+    transform: scale(1.16) translate3d(-2.4%, -1.6%, 0);
+  }
+  100% {
+    transform: scale(1.08) translate3d(0, 0, 0);
+  }
+}
+
+.cta-kenburns {
+  animation: cta-kenburns 28s ease-in-out infinite;
+  will-change: transform;
+}
+
+.cta-lines {
+  background-image: repeating-linear-gradient(
+    -18deg,
+    transparent 0,
+    transparent 28px,
+    rgb(255 255 255 / 0.045) 28px,
+    rgb(255 255 255 / 0.045) 29px
+  );
+  background-size: 240px 240px;
+  animation: cta-lines 36s linear infinite;
+}
+
+@keyframes cta-lines {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 240px 80px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .marquee-track {
     animation: none;
   }
 
   .boletin-live {
+    animation: none;
+  }
+
+  .cta-kenburns,
+  .cta-lines {
     animation: none;
   }
 }

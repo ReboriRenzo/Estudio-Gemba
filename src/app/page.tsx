@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { BotonSitio } from "@/components/BotonSitio";
 import { CtaBand } from "@/components/CtaBand";
 import { MethodSteps } from "@/components/MethodSteps";
 import { NewsletterSection } from "@/components/NewsletterSection";
@@ -13,7 +14,7 @@ export default function HomePage() {
         <section className="relative min-h-0 flex-1 overflow-hidden bg-navy text-white">
         <Image
           src="/home/hero.png"
-          alt="Nave industrial: el diagnóstico de Estudio Gemba empieza en planta"
+          alt="Nave industrial: el diagnóstico de FIRMIND empieza en planta"
           fill
           priority
           className="object-cover grayscale"
@@ -26,26 +27,18 @@ export default function HomePage() {
             Estudio técnico · Buenos Aires
           </p>
           <h1 className="hero-in mt-4 max-w-4xl text-2xl font-medium uppercase tracking-[0.12em] sm:text-3xl md:mt-5 md:text-6xl md:leading-[1.08]">
-            Optimización de procesos con datos de planta, no con recetas
-            genéricas
+            Optimización de procesos con datos de planta, no con métodos
+            genéricos
           </h1>
           <p className="mt-4 max-w-xl text-base leading-relaxed text-white/90 md:mt-6 md:text-lg">
-            Para jefes de planta y directores de operaciones de PyMEs
-            industriales que necesitan resultados medibles en la línea.
+            Para dueños y directores de PyMEs industriales que quieren saber qué
+            está limitando su resultado.
           </p>
           <div className="mt-6 flex flex-wrap gap-4 md:mt-10">
-            <Link
-              href="/contacto"
-              className="bg-white px-6 py-3 text-sm uppercase tracking-[0.12em] text-navy"
-            >
-              Contacto
-            </Link>
-            <Link
-              href="/servicios"
-              className="border border-white px-6 py-3 text-sm uppercase tracking-[0.12em] text-white"
-            >
+            <BotonSitio href="/contacto">Contacto</BotonSitio>
+            <BotonSitio href="/servicios" tono="outline">
               Ver servicios
-            </Link>
+            </BotonSitio>
           </div>
         </div>
         </section>
@@ -56,14 +49,14 @@ export default function HomePage() {
       <section className="mx-auto max-w-6xl px-4 py-20">
         <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>
-            <p className="text-xs uppercase tracking-[0.22em]">Líneas de trabajo</p>
+            <p className="text-xs uppercase tracking-[0.22em]">Tres fases</p>
             <h2 className="mt-3 text-2xl font-medium uppercase tracking-[0.14em] md:text-3xl">
               Servicios
             </h2>
           </div>
           <p className="max-w-md text-base leading-relaxed">
-            Cinco intervenciones para la planta: diagnosticar, reducir pérdidas,
-            cambiar más rápido, ordenar el piso e implementar.
+            Diagnóstico, ejecución y autonomía. Se contratan por separado. El
+            diagnóstico no obliga a continuar.
           </p>
         </div>
         <div className="mt-12">
@@ -98,15 +91,13 @@ export default function HomePage() {
               Ingeniería en el piso, no en el PowerPoint
             </h2>
             <p className="mt-6 text-base leading-relaxed">
-              Estudio Gemba trabaja con PyMEs industriales de Buenos Aires, Zona
-              Sur, y en el resto del país bajo coordinación. El punto de partida
-              es Gemba: OEE, scrap y tiempos muertos, antes de cualquier
-              herramienta.
+              FIRMIND es una red de especialistas. El diagnóstico se hace
+              en planta, con medición propia, alcance cerrado y criterio de
+              éxito acordado por escrito.
             </p>
             <p className="mt-4 text-base leading-relaxed">
-              No vendemos un programa genérico de mejora continua.
-              Diagnosticamos, priorizamos e implementamos con el equipo de
-              planta.
+              Presencia decreciente: si al año seguimos siendo necesarios, el
+              trabajo no cumplió su objetivo.
             </p>
             <Link
               href="/sobre-nosotros"

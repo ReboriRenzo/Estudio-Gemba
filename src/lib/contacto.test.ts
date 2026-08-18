@@ -28,9 +28,9 @@ describe("canalesDisponibles", () => {
 });
 
 describe("contacto v1", () => {
-  it("arranca sin canales publicados", () => {
+  it("publica el WhatsApp de contacto", () => {
     expect(contacto.email).toBe("");
-    expect(contacto.whatsapp).toBe("");
+    expect(contacto.whatsapp).toBe("5491127642266");
     expect(contacto.linkedin).toBe("");
     expect(contacto.horario).toBe("09:00 a 20:00");
     expect(contacto.zona).toBe("Zona Sur, Buenos Aires · Argentina");

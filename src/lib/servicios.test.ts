@@ -7,27 +7,25 @@ import {
 } from "./servicios";
 
 describe("SERVICIOS", () => {
-  it("tiene exactamente 5 líneas con slugs del spec", () => {
+  it("tiene las tres fases del programa", () => {
     expect(slugsServicios()).toEqual([
-      "diagnostico-de-planta",
-      "reduccion-de-perdidas",
-      "smed-cambio-rapido",
-      "tpm-5s",
-      "implementacion",
+      "diagnostico",
+      "ejecucion",
+      "autonomia",
     ]);
-    expect(SERVICIOS).toHaveLength(5);
+    expect(SERVICIOS).toHaveLength(3);
   });
 
   it("getServicio encuentra por slug y no inventa", () => {
-    expect(getServicio("tpm-5s")?.titulo).toBe("TPM y 5S");
+    expect(getServicio("diagnostico")?.titulo).toBe("Diagnóstico");
     expect(getServicio("inexistente")).toBeUndefined();
   });
 
-  it("imagenesServicio arma card, planta y detalle por slug", () => {
-    expect(imagenesServicio("smed-cambio-rapido")).toEqual({
-      card: "/servicios/smed-cambio-rapido.png",
-      planta: "/servicios/smed-cambio-rapido-alt.png",
-      detalle: "/servicios/smed-cambio-rapido-detalle.png",
+  it("imagenesServicio reusa fotos existentes por fase", () => {
+    expect(imagenesServicio("ejecucion")).toEqual({
+      card: "/servicios/implementacion.png",
+      planta: "/servicios/implementacion-alt.png",
+      detalle: "/servicios/implementacion-detalle.png",
     });
   });
 });

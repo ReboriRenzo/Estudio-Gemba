@@ -13,7 +13,7 @@ function sendEmailFromEnv(): SendEmail | undefined {
     const { Resend } = await import("resend");
     const resend = new Resend(key);
     const result = await resend.emails.send({
-      from: `Estudio Gemba <${contacto.email.trim()}>`,
+      from: `FIRMIND <${contacto.email.trim()}>`,
       to,
       subject,
       text,

@@ -45,7 +45,10 @@ export function ServiceCard({
       </div>
       <div className="flex flex-1 flex-col p-6">
         <Icon aria-hidden="true" className="h-6 w-6" />
-        <h3 className="mt-4 text-base font-medium uppercase tracking-[0.12em]">
+        <p className="mt-4 text-xs uppercase tracking-[0.22em] text-navy/70">
+          Fase {servicio.fase}
+        </p>
+        <h3 className="mt-2 text-base font-medium uppercase tracking-[0.12em]">
           {servicio.titulo}
         </h3>
         <p className="mt-3 flex-1 text-sm leading-relaxed">{copy}</p>
