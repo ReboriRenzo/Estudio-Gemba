@@ -14,7 +14,25 @@ export const boletinAcceso = {
 };
 
 const ERROR_REQUERIDO = "Completá este campo.";
-const ERROR_ARCHIVO = "Subí un archivo. PDF, Word, Excel, imagen u otro documento.";
+export const ERROR_ARCHIVO =
+  "Subí un archivo. PDF, Word, Excel u otro documento. No se permiten imágenes.";
+
+const EXTENSIONES_IMAGEN = new Set([
+  "jpg",
+  "jpeg",
+  "png",
+  "gif",
+  "webp",
+  "svg",
+  "bmp",
+  "ico",
+  "tif",
+  "tiff",
+  "heic",
+  "heif",
+  "avif",
+  "jfif",
+]);
 
 const EXTENSIONES_BLOQUEADAS = new Set([
   "exe",
@@ -64,6 +82,7 @@ export function extensionDe(nombre: string): string {
 export function extensionPermitida(nombre: string): boolean {
   const ext = extensionDe(nombre);
   if (!ext) return false;
+  if (EXTENSIONES_IMAGEN.has(ext)) return false;
   return !EXTENSIONES_BLOQUEADAS.has(ext);
 }
 

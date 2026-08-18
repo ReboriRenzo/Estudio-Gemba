@@ -1,6 +1,8 @@
 export type Servicio = {
   slug: string;
+  fase: string;
   titulo: string;
+  duracion: string;
   resumen: string;
   resumenLargo: string;
   resultado: string;
@@ -11,9 +13,17 @@ export type Servicio = {
   queSeHace: string[];
   entregable: string;
   entregableDetalle: string;
+  criterioExito: string;
+  notaComercial: string;
+  fotos: {
+    card: string;
+    planta: string;
+    detalle: string;
+  };
   altHero: string;
   altPlanta: string;
   altDetalle: string;
+  marquee: readonly string[];
   icon:
     | "clipboard-document-check"
     | "chart-bar"
@@ -26,144 +36,166 @@ export const SERVICIO_OTRO = "no-estoy-seguro";
 
 export const SERVICIOS = [
   {
-    slug: "diagnostico-de-planta",
-    titulo: "Diagnóstico de planta",
+    slug: "diagnostico",
+    fase: "01",
+    titulo: "Diagnóstico",
+    duracion: "5 días en planta · Alcance cerrado · Sin obligación de continuar",
     resumen:
-      "Baseline numérico de OEE, scrap y paradas antes de proponer herramientas.",
+      "Cinco días en planta para localizar la restricción y cuantificar cuánto se pierde por mes.",
     resumenLargo:
-      "Medimos la operación con datos de planta. El diagnóstico ordena pérdidas y deja un mapa priorizado para decidir dónde intervenir.",
+      "Recorrido del material y la información, desde el pedido hasta el producto terminado. Medición propia, alcance cerrado y sin obligación de continuar.",
     resultado:
-      "Una línea con números compartidos: qué se pierde, cuánto y dónde.",
+      "Que la dirección pueda decir en una frase dónde pierde y cuánto.",
     contexto:
-      "Sin baseline, cualquier herramienta es una receta. El diagnóstico arma un mapa compartido: OEE, scrap, paradas y cuellos de botella, leídos en el piso y contrastados con los registros que la planta ya tiene.",
+      "El diagnóstico se hace en planta, con medición propia. Recorremos el material y la información desde que entra el pedido hasta que sale el producto terminado, medimos capacidad efectiva por etapa contra la demanda e identificamos la restricción del sistema y sus pérdidas.",
     paraQuien:
-      "Jefes de planta y directores de operaciones de PyMEs industriales que necesitan un punto de partida medible.",
+      "Dueños y directores de PyMEs industriales que quieren saber qué está limitando su resultado.",
     queSeMide:
-      "OEE, tasas de scrap, tiempos muertos, paradas y cuellos de botella visibles en piso.",
-    indicadores: ["OEE", "Scrap", "Paradas", "Cuello de botella"],
-    queSeHace: [
-      "Relevamiento en Gemba y de registros existentes (no un modelo teórico genérico).",
-      "Cálculo de baseline y clasificación de pérdidas.",
-      "Priorización por impacto y factibilidad de intervención.",
+      "Capacidad efectiva por etapa contra la demanda y las pérdidas de la restricción. También qué se mide hoy y qué decisiones se toman con eso.",
+    indicadores: [
+      "Paros no planeados",
+      "Cambios de formato",
+      "Retrabajos",
+      "Capacidad",
     ],
-    entregable: "Informe numérico y mapa de pérdidas priorizado.",
+    queSeHace: [
+      "Recorrido real del material y de la información, de punta a punta.",
+      "Medición de capacidad efectiva por etapa contra la demanda.",
+      "Identificación de la restricción y de sus pérdidas: paros no planeados, cambios de formato, retrabajos.",
+      "Entrevistas a operarios y supervisores. Revisión de qué se mide y qué decisiones se toman con eso.",
+    ],
+    entregable: "Informe ejecutivo y presentación a la dirección",
     entregableDetalle:
-      "Queda un documento que se puede discutir en el turno: números, fotos de contrapunto y un orden de ataque. No un deck genérico de mejora continua.",
+      "Restricción localizada y demostrada, pérdida mensual cuantificada en pesos con supuestos declarados, tres oportunidades priorizadas por impacto y esfuerzo, y las condiciones necesarias para capturarlas. Presentación a la dirección: 2 horas.",
+    criterioExito:
+      "Que la dirección pueda decir en una frase dónde pierde y cuánto.",
+    notaComercial:
+      "Si no se identifica una oportunidad verificable de al menos cinco veces el honorario, no se factura. Si el problema resulta ser comercial o financiero y no operativo, se dice y no se factura. Las primeras recomendaciones son las que no cuestan dinero: comprar equipamiento es lo último.",
+    fotos: {
+      card: "/servicios/diagnostico-de-planta.png",
+      planta: "/servicios/diagnostico-de-planta-alt.png",
+      detalle: "/servicios/diagnostico-de-planta-detalle.png",
+    },
     altHero: "Tablero de control y registros de planta para el diagnóstico",
     altPlanta: "Tablero de OEE y cronómetro en el piso de planta",
     altDetalle: "Manómetros y planilla de relevamiento en el puesto de control",
+    marquee: [
+      "5 días en planta",
+      "Restricción",
+      "Pérdida mensual",
+      "Alcance cerrado",
+      "Capacidad efectiva",
+      "Paros no planeados",
+      "Cambios de formato",
+      "Retrabajos",
+      "Informe ejecutivo",
+      "Sin obligación de continuar",
+    ],
     icon: "clipboard-document-check",
   },
   {
-    slug: "reduccion-de-perdidas",
-    titulo: "Reducción de pérdidas",
+    slug: "ejecucion",
+    fase: "02",
+    titulo: "Ejecución",
+    duracion: "Ciclos de 3 meses · Renovable",
     resumen:
-      "Ataque a scrap, retrabajo y cuellos de botella a partir del diagnóstico.",
+      "Tres prioridades para el trimestre, cada una con indicador y responsable. El trabajo se concentra en lo que traba la ejecución.",
     resumenLargo:
-      "Intervenimos las pérdidas que el número ya señaló. El trabajo es contrapuntos en la línea, no un programa genérico de 'mejora continua'.",
+      "Sesión quincenal con la dirección, visita mensual a planta y seguimiento semanal de compromisos. Decisiones postergadas, delegación y prioridades que se desplazan ante cada urgencia.",
     resultado:
-      "Menor scrap y menos retrabajo, con seguimiento de la tasa en el tiempo.",
+      "Compromisos cumplidos en fecha y movimiento verificable del indicador definido al inicio.",
     contexto:
-      "El desperdicio que se ve en el cajón no siempre es el que más duele. Atacamos las pérdidas que el diagnóstico ya señaló: scrap, retrabajo y el cuello que frena el throughput, con prueba en la línea.",
+      "Tres prioridades para el trimestre, cada una con indicador y responsable. El trabajo se concentra en lo que traba la ejecución: decisiones postergadas, delegación que no ocurre, prioridades que se desplazan ante cada urgencia. Marco ICF, con explicitación del cambio de rol al pasar a la recomendación técnica.",
     paraQuien:
-      "Plantas que ya ven el desperdicio pero no tienen un plan atado a indicadores.",
-    queSeMide: "Tasa de scrap, retrabajo, throughput del cuello de botella.",
-    indicadores: ["Scrap", "Retrabajo", "Throughput"],
+      "Dirección que ya localizó la restricción y necesita mover el indicador en un trimestre.",
+    queSeMide:
+      "Indicador de cada prioridad del trimestre y cumplimiento de compromisos en fecha.",
+    indicadores: ["Prioridades", "Indicadores", "Compromisos"],
     queSeHace: [
-      "Selección de contrapuntos a partir del mapa de pérdidas.",
-      "Prueba en Gemba con responsables de planta.",
-      "Ajuste del estándar y cadencia de revisión del indicador.",
+      "Tres prioridades para el trimestre, cada una con indicador y responsable.",
+      "Sesión quincenal con la dirección y visita mensual a planta para verificar avance sobre el terreno.",
+      "Seguimiento semanal de compromisos: decisiones, delegación y prioridades que no se corren.",
     ],
-    entregable: "Plan de contrapuntos y seguimiento de tasa de scrap.",
+    entregable: "Tablero de prioridades con evidencia de movimiento",
     entregableDetalle:
-      "Cada contrapunto tiene dueño, métrica y fecha de revisión. Si el número no se mueve, se ajusta el estándar: no se cierra el informe y se pasa a otra herramienta.",
-    altHero: "Piezas metálicas en cajones: pérdidas visibles en la línea",
-    altPlanta: "Cola de materiales frente a un cuello de botella",
-    altDetalle: "Detalle de scrap y piezas rechazadas en planta",
+      "Seguimiento documentado y evidencia de movimiento sobre los indicadores definidos al inicio del ciclo.",
+    criterioExito:
+      "Compromisos cumplidos en fecha y movimiento verificable del indicador definido al inicio.",
+    notaComercial:
+      "Honorario: abono fijo, o abono reducido más porcentaje del beneficio verificado a 12 meses con tope trimestral.",
+    fotos: {
+      card: "/servicios/implementacion.png",
+      planta: "/servicios/implementacion-alt.png",
+      detalle: "/servicios/implementacion-detalle.png",
+    },
+    altHero: "Documentación de línea y seguimiento de ejecución",
+    altPlanta: "Tablero de hitos y seguimiento en un pasillo de planta",
+    altDetalle: "Detalle de hitos y tarjetas de seguimiento en planta",
+    marquee: [
+      "Ciclos de 3 meses",
+      "Tres prioridades",
+      "Indicador",
+      "Responsable",
+      "Compromisos",
+      "Sesión quincenal",
+      "Visita mensual",
+      "Tablero",
+      "Ejecución",
+      "Beneficio verificado",
+    ],
     icon: "chart-bar",
   },
   {
-    slug: "smed-cambio-rapido",
-    titulo: "SMED / cambio rápido",
-    resumen: "Reducción de setups para subir disponibilidad de máquina.",
-    resumenLargo:
-      "Separación de operaciones internas y externas, y estándar de cambio medido antes y después.",
-    resultado: "Setups más cortos y más tiempo de máquina disponible.",
-    contexto:
-      "El cambio de formato come disponibilidad. SMED no es un taller de pizarra: se filma el setup, se separa interno de externo y se deja un estándar que el turno puede repetir, medido antes y después.",
-    paraQuien:
-      "Líneas con muchos cambios de formato o utillaje y disponibilidad baja.",
-    queSeMide: "Tiempo de setup, disponibilidad, OEE asociado al cambio.",
-    indicadores: ["Tiempo de setup", "Disponibilidad", "OEE"],
-    queSeHace: [
-      "Filmación y desglose del cambio actual.",
-      "Reclasificación interno/externo y preparación en paralelo.",
-      "Estándar de cambio y medición antes/después.",
-    ],
-    entregable: "Estándar de cambio y medición antes/después.",
-    entregableDetalle:
-      "Carro, utillaje y secuencia quedan definidos. El número que importa es minutos de máquina parada: se compara el cambio de referencia con el estándar nuevo.",
-    altHero: "Componentes de máquina preparados para un cambio de formato",
-    altPlanta: "Carro SMED con matrices, prensas y ranuras numeradas",
-    altDetalle: "Detalle de matriz, prensas y marcas de cambio rápido",
-    icon: "clock",
-  },
-  {
-    slug: "tpm-5s",
-    titulo: "TPM y 5S",
+    slug: "autonomia",
+    fase: "03",
+    titulo: "Autonomía",
+    duracion: "3 a 6 meses · Presencia decreciente",
     resumen:
-      "Orden, inspección básica y disciplina de piso, diseñados para la planta real.",
+      "Formación de supervisores y jefes de turno hasta que la conducción sea autónoma.",
     resumenLargo:
-      "No es una auditoría cosmética. 5S y mantenimiento autónomo se arman para que se sostengan en el turno.",
+      "Estándares, gestión visual e indicadores de turno. Rutina de gestión diaria: qué se revisa, con quién, con qué dato, a qué hora. Acompañamiento con presencia decreciente.",
     resultado:
-      "Piso legible, fallas menores detectadas antes y adherencia medible al rutinario.",
+      "Que a los 90 días de la última visita la rutina siga funcionando.",
     contexto:
-      "5S y TPM no son una auditoría cosmética. Se diseña un rutinario que el turno puede sostener: orden, inspección básica y roles claros, con adherencia medida — no con fotos del día de la visita.",
+      "Formación de supervisores y jefes de turno sobre los problemas concretos de esa planta. Estándares de trabajo, gestión visual e indicadores de turno. Rutina de gestión diaria: qué se revisa, con quién, con qué dato, a qué hora. Acompañamiento hasta que la conducción sea autónoma.",
     paraQuien:
-      "PyMEs que necesitan disciplina operativa sin un programa TPM corporativo maduro.",
+      "Plantas que ya movieron el indicador y necesitan que la rutina quede en el equipo propio.",
     queSeMide:
-      "Adherencia al rutinario, hallazgos de inspección, tiempos de búsqueda/desorden.",
-    indicadores: ["Adherencia", "Hallazgos", "Tiempo de búsqueda"],
+      "Que la rutina de gestión diaria se sostenga sin el estudio. Se verifica con una visita de control incluida.",
+    indicadores: ["Estándares", "Tablero operativo", "Reunión diaria"],
     queSeHace: [
-      "Diagnóstico de orden y de mantenimiento básico en la celda piloto.",
-      "Definición de rutinario 5S/TPM con roles de planta.",
-      "Tablero de adherencia y cadencia de auditoría corta.",
+      "Formación de supervisores y jefes de turno sobre los problemas concretos de esa planta.",
+      "Estándares de trabajo, gestión visual e indicadores de turno.",
+      "Rutina de gestión diaria y acompañamiento hasta que la conducción sea autónoma.",
     ],
-    entregable: "Rutinario 5S/TPM y tablero de adherencia.",
+    entregable: "Estándares, tablero operativo y reunión diaria propia",
     entregableDetalle:
-      "El entregable es un rutinario con dueños de celda y un tablero corto. Si no se audita en el turno, no existe: el estudio deja la cadencia, no un afiche.",
-    altHero: "Tablero de sombras con herramientas ordenadas en planta",
-    altPlanta: "Pasillos marcados, estación de limpieza y estanterías 5S",
+      "Estándares documentados, tablero operativo en uso y una reunión diaria conducida por personal propio. Visita de control incluida para verificar que la rutina sigue a los 90 días de la última visita.",
+    criterioExito:
+      "Que a los 90 días de la última visita la rutina siga funcionando.",
+    notaComercial:
+      "La presencia decrece por diseño. Si al cabo de un año seguimos siendo necesarios, el trabajo no cumplió su objetivo.",
+    fotos: {
+      card: "/servicios/tpm-5s.png",
+      planta: "/servicios/tpm-5s-alt.png",
+      detalle: "/servicios/tpm-5s-detalle.png",
+    },
+    altHero: "Tablero de sombras y orden de piso para sostener la rutina",
+    altPlanta: "Pasillos marcados, estación de limpieza y gestión visual",
     altDetalle: "Detalle de tablero de sombras y cinta de piso",
-    icon: "squares-2x2",
-  },
-  {
-    slug: "implementacion",
-    titulo: "Implementación",
-    resumen:
-      "Bajar el plan a la línea, con responsables y métricas de seguimiento.",
-    resumenLargo:
-      "El valor está en el piso. Acompañamos hitos, indicadores y la cadencia de revisión con el equipo de planta.",
-    resultado:
-      "Un plan ejecutado en Gemba, no un informe que queda en el escritorio.",
-    contexto:
-      "El valor está en el piso. Traducimos el plan a tareas de turno, responsables e indicadores, y acompañamos la cadencia de revisión hasta que el cambio queda en quienes operan la línea.",
-    paraQuien:
-      "Dirección de operaciones que ya tiene diagnóstico o plan y necesita implementación.",
-    queSeMide: "Hitos cumplidos, indicadores acordados en el diagnóstico, desviaciones.",
-    indicadores: ["Hitos", "Indicadores", "Desviaciones"],
-    queSeHace: [
-      "Traducción del plan a tareas de turno y responsables.",
-      "Seguimiento en planta y ajuste de contrapuntos.",
-      "Cadencia de revisión con números, no con percepción.",
+    marquee: [
+      "Presencia decreciente",
+      "Estándares",
+      "Gestión visual",
+      "Indicadores de turno",
+      "Reunión diaria",
+      "Supervisores",
+      "Tablero operativo",
+      "90 días",
+      "Formación",
+      "Autonomía",
     ],
-    entregable: "Hitos, indicadores y cadencia de revisión.",
-    entregableDetalle:
-      "Un tablero de hitos que se revisa en planta. Si un contrapunto no corre, se ajusta en Gemba — no se archiva el plan y se espera al próximo trimestre.",
-    altHero: "Documentación de línea y seguimiento de implementación",
-    altPlanta: "Tablero de hitos y seguimiento en un pasillo de planta",
-    altDetalle: "Detalle de hitos y tarjetas de seguimiento en Gemba",
-    icon: "cog-6-tooth",
+    icon: "squares-2x2",
   },
 ] as const satisfies readonly Servicio[];
 
@@ -176,6 +208,8 @@ export function slugsServicios(): string[] {
 }
 
 export function imagenesServicio(slug: string) {
+  const servicio = getServicio(slug);
+  if (servicio) return servicio.fotos;
   return {
     card: `/servicios/${slug}.png`,
     planta: `/servicios/${slug}-alt.png`,

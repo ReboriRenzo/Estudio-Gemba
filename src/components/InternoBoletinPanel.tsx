@@ -174,8 +174,8 @@ export function InternoBoletinPanel() {
       >
         <h2 className="text-sm uppercase tracking-[0.18em]">Publicar archivo</h2>
         <p className="text-sm leading-relaxed">
-          PDF, Word, Excel, imagen u otro documento. Al hacer clic en el boletín
-          se descarga. Máximo 15 MB.
+          PDF, Word, Excel u otro documento. No se permiten imágenes. Al hacer
+          clic en el boletín se descarga. Máximo 15 MB.
         </p>
         <div>
           <label htmlFor="arch-titulo" className="text-sm">
@@ -199,6 +199,7 @@ export function InternoBoletinPanel() {
             id="arch-file"
             key={archivoKey}
             type="file"
+            accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.odt,.ods,.txt,.csv,.rtf,application/pdf"
             onChange={(e) => setArchivo(e.target.files?.[0] ?? null)}
             className={field}
           />

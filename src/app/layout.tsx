@@ -17,20 +17,20 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://estudiogemba.com.ar"),
-  title: { default: "Estudio Gemba", template: "%s | Estudio Gemba" },
+  metadataBase: new URL("https://firmind.com.ar"),
+  title: { default: "FIRMIND", template: "%s | FIRMIND" },
   description:
-    "Ingeniería y optimización de procesos para PyMEs industriales. Diagnóstico con OEE, scrap y tiempos muertos. Buenos Aires, Zona Sur.",
+    "Ingeniería y optimización de procesos para PyMEs industriales. Diagnóstico en planta, ejecución y autonomía. Buenos Aires.",
   openGraph: {
     locale: "es_AR",
     type: "website",
-    url: "https://estudiogemba.com.ar",
-    siteName: "Estudio Gemba",
-    images: [{ url: "/logo-gemba.png", alt: "Estudio Gemba" }],
+    url: "https://firmind.com.ar",
+    siteName: "FIRMIND",
+    images: [{ url: "/logo-firmind.png", alt: "FIRMIND" }],
   },
   twitter: {
     card: "summary",
-    images: ["/logo-gemba.png"],
+    images: ["/logo-firmind.png"],
   },
 };
 
@@ -38,7 +38,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="es-AR"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} h-full scroll-smooth antialiased`}
       suppressHydrationWarning
     >
       <body

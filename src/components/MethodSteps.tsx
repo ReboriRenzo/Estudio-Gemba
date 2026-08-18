@@ -1,29 +1,24 @@
 const STEPS = [
   {
     n: "01",
-    title: "Diagnóstico numérico",
-    body: "Baseline de OEE, scrap, paradas y pérdidas, leído en la planta y en los registros.",
+    title: "Diagnóstico",
+    body: "Cinco días en planta, alcance cerrado. Restricción localizada, pérdida mensual cuantificada y sin obligación de continuar.",
   },
   {
     n: "02",
-    title: "Plan de acción",
-    body: "Contramedidas priorizadas por impacto, no un paquete genérico de herramientas.",
+    title: "Ejecución",
+    body: "Ciclos de tres meses. Tres prioridades con indicador y responsable. El trabajo se concentra en lo que traba la ejecución.",
   },
   {
     n: "03",
-    title: "Implementación en Gemba",
-    body: "El plan baja a la línea, con responsables de planta y prueba en el piso.",
-  },
-  {
-    n: "04",
-    title: "Seguimiento medible",
-    body: "Cadencia de revisión con indicadores. Se sostiene lo que se mide.",
+    title: "Autonomía",
+    body: "Presencia decreciente. Estándares, tablero operativo y reunión diaria conducida por personal propio.",
   },
 ] as const;
 
 export function MethodSteps() {
   return (
-    <ol className="grid gap-px bg-navy/15 sm:grid-cols-2 lg:grid-cols-4">
+    <ol className="grid gap-px bg-navy/15 sm:grid-cols-2 lg:grid-cols-3">
       {STEPS.map((step) => (
         <li key={step.n} className="bg-white p-6">
           <p className="text-xs uppercase tracking-[0.22em] text-navy/70">

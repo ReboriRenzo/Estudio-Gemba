@@ -8,7 +8,7 @@ export type ContactoConfig = {
 
 export const contacto: ContactoConfig = {
   email: "",
-  whatsapp: "",
+  whatsapp: "5491127642266",
   linkedin: "",
   horario: "09:00 a 20:00",
   zona: "Zona Sur, Buenos Aires · Argentina",

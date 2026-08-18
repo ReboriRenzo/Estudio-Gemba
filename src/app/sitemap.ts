@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { slugsServicios } from "@/lib/servicios";
 
-const base = "https://estudiogemba.com.ar";
+const base = "https://firmind.com.ar";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes = [

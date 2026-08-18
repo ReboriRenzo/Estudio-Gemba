@@ -1,7 +1,7 @@
 import { canalesDisponibles, contacto } from "@/lib/contacto";
 
 const MENSAJE =
-  "Hola, quiero hacer una consulta a Estudio Gemba.";
+  "Hola, quiero hacer una consulta a FIRMIND.";
 
 export function WhatsAppButton() {
   const canales = canalesDisponibles(contacto);

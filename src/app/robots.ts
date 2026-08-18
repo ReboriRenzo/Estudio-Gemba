@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: "/",
       disallow: "/interno",
     },
-    sitemap: "https://estudiogemba.com.ar/sitemap.xml",
+    sitemap: "https://firmind.com.ar/sitemap.xml",
   };
 }

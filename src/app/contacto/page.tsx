@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
 import { ConsultaEmailForm } from "@/components/ConsultaEmailForm";
 import { PhotoHero } from "@/components/PhotoHero";
+import { VocabularioMarquee } from "@/components/VocabularioMarquee";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { canalesDisponibles, contacto } from "@/lib/contacto";
+import { MARQUESINA_CONTACTO } from "@/lib/marquesinas";
 
 export const metadata: Metadata = {
   title: "Contacto",
   description:
-    "Contactá a Estudio Gemba por WhatsApp o email. Horario 09:00 a 20:00. Zona Sur, Buenos Aires.",
+    "Contactá a FIRMIND por WhatsApp o email. Horario 09:00 a 20:00. Zona Sur, Buenos Aires.",
 };
 
 export default function ContactoPage() {
@@ -16,11 +18,15 @@ export default function ContactoPage() {
   return (
     <>
       <PhotoHero
-        kicker="Estudio Gemba"
+        kicker="FIRMIND"
         title="Contacto"
         description="Escribinos por WhatsApp o enviá una consulta por email."
         image="/contacto/hero.png"
         alt="Escritorio técnico junto a la planta"
+      />
+      <VocabularioMarquee
+        terms={MARQUESINA_CONTACTO}
+        label="Vocabulario de contacto"
       />
       <div className="mx-auto grid max-w-6xl gap-12 px-4 py-16 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,0.8fr)]">
         <div className="flex flex-col gap-14">
@@ -50,6 +56,13 @@ export default function ContactoPage() {
               <li>
                 <a href={`mailto:${contacto.email.trim()}`}>
                   {contacto.email.trim()}
+                </a>
+              </li>
+            ) : null}
+            {canales.whatsapp ? (
+              <li>
+                <a href={`https://wa.me/${contacto.whatsapp.trim()}`}>
+                  +54 9 11 2764-2266
                 </a>
               </li>
             ) : null}

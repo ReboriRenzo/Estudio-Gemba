@@ -39,8 +39,8 @@ export function SiteHeader() {
       <header
         className={
           overlay
-            ? "fixed top-[var(--dev-banner-h)] z-40 h-[var(--site-header-h)] w-full border-b border-transparent bg-transparent transition-[background-color,border-color] duration-300"
-            : "fixed top-[var(--dev-banner-h)] z-40 h-[var(--site-header-h)] w-full border-b border-navy/15 bg-white transition-[background-color,border-color] duration-300"
+            ? "fixed top-[var(--dev-banner-h)] z-40 h-24 w-full border-b border-transparent bg-transparent transition-[background-color,border-color,height] duration-300 md:h-32 lg:h-36"
+            : "fixed top-[var(--dev-banner-h)] z-40 h-[var(--site-header-h)] w-full border-b border-navy/15 bg-white transition-[background-color,border-color,height] duration-300"
         }
       >
         <div className="mx-auto flex h-full max-w-6xl items-center justify-between gap-4 px-4">
@@ -53,11 +53,15 @@ export function SiteHeader() {
             }
           >
             <Image
-              src={overlay ? "/logo-gemba-blanco.png" : "/logo-gemba.png"}
-              alt="Estudio Gemba"
-              width={986}
-              height={597}
-              className="h-12 w-auto"
+              src={overlay ? "/logo-firmind-blanco.png" : "/logo-firmind.png"}
+              alt="FIRMIND"
+              width={1834}
+              height={725}
+              className={
+                overlay
+                  ? "h-16 w-auto transition-[height] duration-300 md:h-24 lg:h-28"
+                  : "h-12 w-auto transition-[height] duration-300"
+              }
               priority
             />
           </Link>

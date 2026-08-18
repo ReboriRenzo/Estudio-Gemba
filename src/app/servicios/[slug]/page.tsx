@@ -4,6 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { CtaBand } from "@/components/CtaBand";
 import { PhotoHero } from "@/components/PhotoHero";
+import { VocabularioMarquee } from "@/components/VocabularioMarquee";
 import {
   getServicio,
   imagenesServicio,
@@ -38,21 +39,25 @@ export default async function ServicioPage({ params }: Props) {
   return (
     <>
       <PhotoHero
-        kicker="Servicio"
+        kicker={`Fase ${servicio.fase}`}
         title={servicio.titulo}
-        description={servicio.resultado}
+        description={servicio.duracion}
         image={fotos.card}
         alt={servicio.altHero}
+      />
+      <VocabularioMarquee
+        terms={servicio.marquee}
+        label={`Vocabulario de ${servicio.titulo}`}
       />
 
       <section className="border-b border-navy/15">
         <div className="mx-auto grid max-w-6xl gap-12 px-4 py-20 lg:grid-cols-12">
           <p className="text-xs uppercase tracking-[0.22em] lg:col-span-3">
-            01 — Para quién
+            01 — Alcance
           </p>
           <div className="lg:col-span-9">
             <h2 className="text-2xl font-medium uppercase tracking-[0.12em] md:text-3xl">
-              {servicio.titulo}
+              {servicio.resultado}
             </h2>
             <div className="mt-8 max-w-3xl space-y-5 text-base leading-relaxed md:text-lg">
               <p>{servicio.contexto}</p>
@@ -76,9 +81,12 @@ export default async function ServicioPage({ params }: Props) {
           <div className="flex flex-col justify-center py-4 lg:py-8">
             <p className="text-xs uppercase tracking-[0.22em]">02 — Qué se mide</p>
             <h2 className="mt-4 text-2xl font-medium uppercase tracking-[0.12em]">
-              El número, no la percepción
+              Criterio de éxito
             </h2>
             <p className="mt-6 text-base leading-relaxed">{servicio.queSeMide}</p>
+            <p className="mt-4 text-base leading-relaxed">
+              {servicio.criterioExito}
+            </p>
             <ul className="mt-8 flex flex-wrap gap-2">
               {servicio.indicadores.map((item) => (
                 <li
@@ -99,9 +107,9 @@ export default async function ServicioPage({ params }: Props) {
             03 — Qué se hace en planta
           </p>
           <h2 className="mt-4 max-w-2xl text-2xl font-medium uppercase tracking-[0.12em] md:text-3xl">
-            Tres pasos, siempre en Gemba
+            El trabajo, en el piso
           </h2>
-          <ol className="mt-12 grid gap-px bg-navy/15 md:grid-cols-3">
+          <ol className="mt-12 grid gap-px bg-navy/15 md:grid-cols-2 lg:grid-cols-3">
             {servicio.queSeHace.map((paso, index) => (
               <li key={paso} className="bg-white px-6 py-10 md:px-8">
                 <span className="text-xs uppercase tracking-[0.22em]">
@@ -124,6 +132,7 @@ export default async function ServicioPage({ params }: Props) {
             <p className="mt-6 text-base leading-relaxed">
               {servicio.entregableDetalle}
             </p>
+            <p className="mt-4 text-base leading-relaxed">{servicio.notaComercial}</p>
           </div>
           <div className="relative order-1 min-h-[280px] overflow-hidden lg:order-2 lg:min-h-[480px]">
             <Image
@@ -139,15 +148,18 @@ export default async function ServicioPage({ params }: Props) {
 
       <section>
         <div className="mx-auto max-w-6xl px-4 py-16">
-          <p className="text-xs uppercase tracking-[0.22em]">Otras líneas</p>
-          <ul className="mt-8 grid gap-px bg-navy/15 sm:grid-cols-2 lg:grid-cols-4">
+          <p className="text-xs uppercase tracking-[0.22em]">Otras fases</p>
+          <ul className="mt-8 grid gap-px bg-navy/15 sm:grid-cols-2">
             {otros.map((item) => (
               <li key={item.slug} className="bg-white">
                 <Link
                   href={`/servicios/${item.slug}`}
                   className="flex h-full flex-col p-6 transition-colors hover:bg-paper"
                 >
-                  <span className="text-sm font-medium uppercase tracking-[0.12em]">
+                  <span className="text-xs uppercase tracking-[0.18em] text-navy/70">
+                    Fase {item.fase}
+                  </span>
+                  <span className="mt-2 text-sm font-medium uppercase tracking-[0.12em]">
                     {item.titulo}
                   </span>
                   <span className="mt-4 text-xs uppercase tracking-[0.14em]">
@@ -160,7 +172,7 @@ export default async function ServicioPage({ params }: Props) {
         </div>
       </section>
 
-      <CtaBand title="Consultá este servicio" href="/contacto" />
+      <CtaBand title="Consultá esta fase" href="/contacto" />
     </>
   );
 }

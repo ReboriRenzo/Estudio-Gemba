@@ -15,7 +15,7 @@ const presupuestoOk = {
   email: "ana@acme.com",
   telefono: "1144445555",
   planta: "Lomas de Zamora",
-  servicio: "diagnostico-de-planta",
+  servicio: "diagnostico",
   mensaje: "Necesitamos baseline de OEE.",
   preferencia: "email",
 } as const;
@@ -127,7 +127,11 @@ describe("validateConsulta", () => {
 describe("resolverEnvio", () => {
   it("queued cuando no hay canales", async () => {
     const log = vi.fn();
-    const r = await resolverEnvio(presupuestoOk, contacto, { log });
+    const r = await resolverEnvio(
+      presupuestoOk,
+      { ...contacto, email: "", whatsapp: "" },
+      { log },
+    );
     expect(r).toEqual({ kind: "queued" });
     expect(log).toHaveBeenCalledOnce();
   });
@@ -150,7 +154,7 @@ describe("resolverEnvio", () => {
       { ...newsletterOk, sector: "metalúrgica", preferencia: "whatsapp" },
       {
         ...contacto,
-        email: "estudio@gemba.com",
+        email: "hola@firmind.com",
         whatsapp: "5491112345678",
       },
       { sendEmail },
@@ -173,7 +177,7 @@ describe("resolverEnvio", () => {
       newsletterOk,
       {
         ...contacto,
-        email: "estudio@gemba.com",
+        email: "hola@firmind.com",
         whatsapp: "5491112345678",
       },
       { sendEmail },
@@ -186,12 +190,12 @@ describe("resolverEnvio", () => {
     const sendEmail = vi.fn().mockResolvedValue(undefined);
     const r = await resolverEnvio(
       newsletterOk,
-      { ...contacto, email: "estudio@gemba.com" },
+      { ...contacto, email: "hola@firmind.com" },
       { sendEmail },
     );
     expect(r).toEqual({ kind: "emailed" });
     expect(sendEmail).toHaveBeenCalledWith({
-      to: "estudio@gemba.com",
+      to: "hola@firmind.com",
       subject: "Boletín de Industria — Ana Pérez",
       text: formatConsultaText(newsletterOk),
     });
@@ -200,12 +204,12 @@ describe("resolverEnvio", () => {
   it("newsletter con preferencia email usa mailto si hay casilla y no hay Resend", async () => {
     const r = await resolverEnvio(
       newsletterOk,
-      { ...contacto, email: "hola@estudiogemba.com.ar" },
+      { ...contacto, email: "hola@firmind.com.ar" },
       {},
     );
     expect(r.kind).toBe("mailto");
     if (r.kind === "mailto") {
-      expect(r.url).toContain("mailto:hola@estudiogemba.com.ar");
+      expect(r.url).toContain("mailto:hola@firmind.com.ar");
       expect(decodeURIComponent(r.url)).toContain("Boletín de Industria");
     }
   });
@@ -219,12 +223,12 @@ describe("resolverEnvio", () => {
         email: "ana@acme.com",
         mensaje: "Consulta sobre OEE.",
       },
-      { ...contacto, email: "hola@estudiogemba.com.ar" },
+      { ...contacto, email: "hola@firmind.com.ar" },
       {},
     );
     expect(r.kind).toBe("mailto");
     if (r.kind === "mailto") {
-      expect(r.url).toContain("mailto:hola@estudiogemba.com.ar");
+      expect(r.url).toContain("mailto:hola@firmind.com.ar");
       expect(decodeURIComponent(r.url)).toContain("Consulta sobre OEE.");
       expect(decodeURIComponent(r.url)).toContain("Acme SA");
     }
@@ -234,7 +238,7 @@ describe("resolverEnvio", () => {
     const sendEmail = vi.fn().mockRejectedValue(new Error("smtp down"));
     const r = await resolverEnvio(
       newsletterOk,
-      { ...contacto, email: "estudio@gemba.com" },
+      { ...contacto, email: "hola@firmind.com" },
       { sendEmail },
     );
     expect(r).toEqual({ kind: "provider_error" });
