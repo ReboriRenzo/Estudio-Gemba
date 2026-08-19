@@ -30,7 +30,7 @@ export function PhotoHero({
             {kicker}
           </p>
         ) : null}
-        <h1 className="mt-4 max-w-4xl text-3xl font-medium uppercase tracking-[0.14em] md:text-5xl md:leading-tight">
+        <h1 className="mt-4 max-w-4xl text-3xl font-medium uppercase tracking-[0.08em] break-words md:text-5xl md:leading-tight md:tracking-[0.14em]">
           {title}
         </h1>
         <p className="mt-5 max-w-2xl text-lg leading-relaxed text-white/90">

@@ -24,7 +24,7 @@ export function CtaBand({
       <div className="pointer-events-none absolute inset-0 bg-navy/72" />
       <div className="cta-lines pointer-events-none absolute inset-0" aria-hidden="true" />
       <div className="relative mx-auto flex max-w-6xl flex-col items-start gap-6 px-4 py-16 md:flex-row md:items-center md:justify-between">
-        <h2 className="max-w-xl text-2xl font-medium uppercase tracking-[0.16em]">
+        <h2 className="max-w-xl text-2xl font-medium uppercase tracking-[0.08em] break-words md:tracking-[0.16em]">
           {title}
         </h2>
         <BotonSitio href={href}>Contacto</BotonSitio>

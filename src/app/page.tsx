@@ -26,7 +26,7 @@ export default function HomePage() {
           <p className="text-xs uppercase tracking-[0.32em] text-white/80">
             Estudio técnico · Buenos Aires
           </p>
-          <h1 className="hero-in mt-4 max-w-4xl text-2xl font-medium uppercase tracking-[0.12em] sm:text-3xl md:mt-5 md:text-6xl md:leading-[1.08]">
+          <h1 className="hero-in mt-4 max-w-4xl text-2xl font-medium uppercase tracking-[0.08em] break-words sm:text-3xl md:mt-5 md:text-6xl md:leading-[1.08] md:tracking-[0.12em]">
             Optimización de procesos con datos de planta, no con métodos
             genéricos
           </h1>
