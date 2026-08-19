@@ -71,12 +71,12 @@ export default function SobreNosotrosPage() {
 
       <section className="border-b border-navy/15 bg-paper">
         <div className="mx-auto grid max-w-6xl gap-8 px-4 py-10 lg:grid-cols-2 lg:gap-12 lg:py-14">
-          <div className="relative min-h-[280px] overflow-hidden lg:min-h-[480px]">
+          <div className="relative min-h-[360px] overflow-hidden lg:min-h-[600px]">
             <Image
               src="/sobre/matias.png"
               alt="Matías Emanuel Acuña, fundador de FIRMIND"
               fill
-              className="object-cover object-[center_20%]"
+              className="object-cover object-top"
               sizes="(min-width: 1024px) 50vw, 100vw"
             />
           </div>
@@ -98,7 +98,7 @@ export default function SobreNosotrosPage() {
               que todos ven y no se resuelven.
             </p>
             <p className="mt-4 text-base leading-relaxed">
-              Cinco días completos, midiendo antes de proponer nada. Cuando el
+              Cinco días completos, midiendo antes de proponer algo. Cuando el
               proyecto requiere otra especialidad, sumo al profesional que
               corresponda y lo aviso antes. No traigo un programa armado de
               antemano: traigo un método para encontrar qué está limitando el

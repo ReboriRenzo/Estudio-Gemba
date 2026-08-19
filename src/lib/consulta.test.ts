@@ -82,6 +82,30 @@ describe("validateConsulta", () => {
     expect(r).toEqual({ ok: true, data: newsletterOk });
   });
 
+  it("acepta newsletter con WhatsApp numérico", () => {
+    const r = validateConsulta({
+      tipo: "newsletter",
+      nombre: "Ana Pérez",
+      email: "11 2764-2266",
+      preferencia: "whatsapp",
+    });
+    expect(r.ok).toBe(true);
+    if (r.ok && r.data.tipo === "newsletter") {
+      expect(r.data.email).toBe("11 2764-2266");
+    }
+  });
+
+  it("rechaza newsletter con WhatsApp inválido", () => {
+    const r = validateConsulta({
+      tipo: "newsletter",
+      nombre: "Ana Pérez",
+      email: "ana@",
+      preferencia: "whatsapp",
+    });
+    expect(r.ok).toBe(false);
+    if (!r.ok) expect(r.errors.email).toBe("Ingresá un WhatsApp válido.");
+  });
+
   it("rechaza newsletter sin preferencia de canal", () => {
     const r = validateConsulta({
       tipo: "newsletter",

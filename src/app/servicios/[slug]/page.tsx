@@ -53,13 +53,21 @@ export default async function ServicioPage({ params }: Props) {
       <section className="border-b border-navy/15">
         <div className="mx-auto grid max-w-6xl gap-12 px-4 py-20 lg:grid-cols-12">
           <p className="text-xs uppercase tracking-[0.22em] lg:col-span-3">
-            01 — Alcance
+            {servicio.slug === "diagnostico" ? "01 — Qué se logra" : "01 — Alcance"}
           </p>
           <div className="lg:col-span-9">
-            <h2 className="text-2xl font-medium uppercase tracking-[0.12em] md:text-3xl">
-              {servicio.resultado}
-            </h2>
-            <div className="mt-8 max-w-3xl space-y-5 text-base leading-relaxed md:text-lg">
+            {servicio.slug === "diagnostico" ? null : (
+              <h2 className="text-2xl font-medium uppercase tracking-[0.12em] md:text-3xl">
+                {servicio.resultado}
+              </h2>
+            )}
+            <div
+              className={
+                servicio.slug === "diagnostico"
+                  ? "max-w-3xl space-y-5 text-base leading-relaxed md:text-lg"
+                  : "mt-8 max-w-3xl space-y-5 text-base leading-relaxed md:text-lg"
+              }
+            >
               <p>{servicio.contexto}</p>
               <p>{servicio.paraQuien}</p>
             </div>
@@ -81,12 +89,16 @@ export default async function ServicioPage({ params }: Props) {
           <div className="flex flex-col justify-center py-4 lg:py-8">
             <p className="text-xs uppercase tracking-[0.22em]">02 — Qué se mide</p>
             <h2 className="mt-4 text-2xl font-medium uppercase tracking-[0.12em]">
-              Criterio de éxito
+              {servicio.slug === "diagnostico"
+                ? "Lo que la planta no registra"
+                : "Criterio de éxito"}
             </h2>
             <p className="mt-6 text-base leading-relaxed">{servicio.queSeMide}</p>
-            <p className="mt-4 text-base leading-relaxed">
-              {servicio.criterioExito}
-            </p>
+            {servicio.slug === "diagnostico" ? null : (
+              <p className="mt-4 text-base leading-relaxed">
+                {servicio.criterioExito}
+              </p>
+            )}
             <ul className="mt-8 flex flex-wrap gap-2">
               {servicio.indicadores.map((item) => (
                 <li
@@ -109,7 +121,13 @@ export default async function ServicioPage({ params }: Props) {
           <h2 className="mt-4 max-w-2xl text-2xl font-medium uppercase tracking-[0.12em] md:text-3xl">
             El trabajo, en el piso
           </h2>
-          <ol className="mt-12 grid gap-px bg-navy/15 md:grid-cols-2 lg:grid-cols-3">
+          <ol
+            className={
+              servicio.queSeHace.length === 4
+                ? "mt-12 grid gap-px bg-navy/15 sm:grid-cols-2"
+                : "mt-12 grid gap-px bg-navy/15 md:grid-cols-2 lg:grid-cols-3"
+            }
+          >
             {servicio.queSeHace.map((paso, index) => (
               <li key={paso} className="bg-white px-6 py-10 md:px-8">
                 <span className="text-xs uppercase tracking-[0.22em]">
@@ -132,7 +150,29 @@ export default async function ServicioPage({ params }: Props) {
             <p className="mt-6 text-base leading-relaxed">
               {servicio.entregableDetalle}
             </p>
-            <p className="mt-4 text-base leading-relaxed">{servicio.notaComercial}</p>
+            {servicio.slug === "diagnostico" ? (
+              <div className="mt-4 space-y-4 text-base leading-relaxed">
+                <p>
+                  Si no se identifica una oportunidad verificable de{" "}
+                  <strong>
+                    al menos cinco veces el honorario, no se factura
+                  </strong>
+                  .
+                </p>
+                <p>
+                  Si el problema resulta ser comercial o financiero y no
+                  operativo, se dice y no se factura.
+                </p>
+                <p>
+                  Las primeras recomendaciones son las que no cuestan dinero:
+                  comprar equipamiento es lo último.
+                </p>
+              </div>
+            ) : (
+              <p className="mt-4 text-base leading-relaxed">
+                {servicio.notaComercial}
+              </p>
+            )}
           </div>
           <div className="relative order-1 min-h-[280px] overflow-hidden lg:order-2 lg:min-h-[480px]">
             <Image

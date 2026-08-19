@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { NewsletterForm } from "@/components/NewsletterForm";
 import { VocabularioMarquee } from "@/components/VocabularioMarquee";
-import { BotonSitio } from "@/components/BotonSitio";
 import { leerNoticias } from "@/lib/boletin-archivo";
 import { MARQUESINA_BOLETIN } from "@/lib/marquesinas";
 
@@ -14,44 +13,7 @@ export const metadata: Metadata = {
     "Los datos del sector, traducidos a decisiones de planta. Una vez por mes. Suscripción gratuita.",
 };
 
-const LLEGA = [
-  {
-    n: "01",
-    title: "Datos de sector",
-    body: "Lo que mueve a la industria, traducido a una decisión que se puede tomar en planta.",
-  },
-  {
-    n: "02",
-    title: "Una vez por mes",
-    body: "Una edición mensual. No una ráfaga comercial ni un resumen genérico de noticias.",
-  },
-  {
-    n: "03",
-    title: "Decisiones de planta",
-    body: "Restricción, scrap, setups y capacidad ociosa: el dato sirve si cambia lo que se hace en el turno.",
-  },
-  {
-    n: "04",
-    title: "Sin ruido",
-    body: "Suscripción gratuita. Coordinamos el alta por WhatsApp o email.",
-  },
-] as const;
-
-const TEMAS = [
-  "Eficiencia",
-  "Scrap",
-  "Cuellos de botella",
-  "Retrabajos",
-  "Tiempos muertos",
-  "Setups",
-  "Paros no planeados",
-  "Lead time",
-  "Capacidad ociosa",
-  "Inventario en proceso",
-] as const;
-
 export default async function NewsletterPage() {
-  const temas = [...TEMAS, ...TEMAS];
   const noticias = await leerNoticias();
 
   return (
@@ -85,24 +47,10 @@ export default async function NewsletterPage() {
         label="Vocabulario del boletín"
       />
 
-      <section className="overflow-hidden border-b border-navy/15 bg-paper">
-        <div className="marquee-track py-4" aria-hidden="true">
-          {temas.map((tema, index) => (
-            <p
-              key={`${tema}-${index}`}
-              className="flex shrink-0 items-center gap-8 px-5 text-sm tracking-[0.14em] text-navy/70"
-            >
-              <span>{tema}</span>
-              <span className="h-px w-8 bg-navy/25" />
-            </p>
-          ))}
-        </div>
-        <span className="sr-only">
-          Próximas lecturas: {TEMAS.join(", ")}.
-        </span>
-      </section>
-
-      <section className="border-b border-navy/15">
+      <section
+        id="suscripcion"
+        className="scroll-mt-[calc(var(--site-header-h)+var(--dev-banner-h)+1rem)] border-b border-navy/15"
+      >
         <div className="mx-auto grid max-w-6xl gap-12 px-4 py-20 lg:grid-cols-12">
           <p className="text-xs uppercase tracking-[0.22em] lg:col-span-3">
             01 — Qué es
@@ -117,10 +65,38 @@ export default async function NewsletterPage() {
                 decisión que se puede tomar en planta. Una vez por mes.
               </p>
               <p>
-                Es gratuito. No es un embudo de venta ni una ráfaga semanal. Te
-                suscribís y coordinamos el alta por el canal que elijas.
+                Leemos los informes de producción y capacidad instalada de la
+                industria argentina, y traducimos los números a lo que
+                significan para una planta concreta. Es decir, qué implica ese
+                dato para quien tiene que decidir si abre un turno, si compra
+                una máquina o si cambia lo que produce.
               </p>
             </div>
+          </div>
+        </div>
+
+        <div className="mx-auto grid max-w-6xl gap-8 px-4 pb-20 lg:grid-cols-2 lg:gap-12">
+          <div className="flex flex-col justify-center">
+            <p className="text-xs uppercase tracking-[0.22em]">02 — Alta</p>
+            <h2 className="mt-4 text-2xl font-medium uppercase tracking-[0.12em]">
+              Suscribite gratis
+            </h2>
+            <p className="mt-4 mb-8 max-w-xl text-base leading-relaxed">
+              Completá el formulario y elegí WhatsApp o email. Coordinamos el
+              alta por el canal que elijas.
+            </p>
+            <div className="border border-navy/20 bg-white p-6 md:p-8">
+              <NewsletterForm />
+            </div>
+          </div>
+          <div className="relative hidden min-h-[400px] overflow-hidden lg:block">
+            <Image
+              src="/newsletter/hero.png"
+              alt="Notas técnicas de planta para el boletín"
+              fill
+              className="object-cover grayscale"
+              sizes="50vw"
+            />
           </div>
         </div>
       </section>
@@ -184,60 +160,6 @@ export default async function NewsletterPage() {
                 ))}
               </ol>
             )}
-          </div>
-
-          <div className="mt-10">
-            <BotonSitio href="#suscripcion">Suscribirme</BotonSitio>
-          </div>
-        </div>
-      </section>
-
-      <section className="border-b border-navy/15">
-        <div className="mx-auto max-w-6xl px-4 py-20">
-          <p className="text-xs uppercase tracking-[0.22em]">02 — Qué llega</p>
-            <h2 className="mt-4 max-w-2xl text-2xl font-medium uppercase tracking-[0.12em] md:text-3xl">
-              Una vez por mes, para decidir en planta
-            </h2>
-          <ol className="mt-12 grid gap-px bg-navy/15 sm:grid-cols-2">
-            {LLEGA.map((item) => (
-              <li key={item.n} className="bg-white px-6 py-10 md:px-8">
-                <span className="text-xs uppercase tracking-[0.22em]">{item.n}</span>
-                <h3 className="mt-5 text-base font-medium uppercase tracking-[0.12em]">
-                  {item.title}
-                </h3>
-                <p className="mt-3 text-base leading-relaxed">{item.body}</p>
-              </li>
-            ))}
-          </ol>
-        </div>
-      </section>
-
-      <section
-        id="suscripcion"
-        className="scroll-mt-[calc(var(--site-header-h)+var(--dev-banner-h)+1rem)] bg-paper"
-      >
-        <div className="mx-auto grid max-w-6xl gap-8 px-4 py-10 lg:grid-cols-2 lg:gap-12 lg:py-14">
-          <div className="flex flex-col justify-center py-4 lg:py-8">
-            <p className="text-xs uppercase tracking-[0.22em]">03 — Alta</p>
-            <h2 className="mt-4 text-2xl font-medium uppercase tracking-[0.12em]">
-              Suscribite gratis
-            </h2>
-            <p className="mt-4 mb-8 max-w-xl text-base leading-relaxed">
-              Completá el formulario y elegí WhatsApp o email. Coordinamos el
-              alta por el canal que elijas.
-            </p>
-            <div className="border border-navy/20 bg-white p-6 md:p-8">
-              <NewsletterForm />
-            </div>
-          </div>
-          <div className="relative hidden min-h-[400px] overflow-hidden lg:block">
-            <Image
-              src="/newsletter/hero.png"
-              alt="Notas técnicas de planta para el boletín"
-              fill
-              className="object-cover grayscale"
-              sizes="50vw"
-            />
           </div>
         </div>
       </section>

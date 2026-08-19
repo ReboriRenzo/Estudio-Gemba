@@ -41,6 +41,7 @@ export type FieldErrors = Record<string, string>;
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const ERROR_REQUERIDO = "Completá este campo.";
 const ERROR_EMAIL = "Ingresá un email válido.";
+const ERROR_WHATSAPP = "Ingresá un WhatsApp válido.";
 const ERROR_MENSAJE = "El mensaje no puede superar 2000 caracteres.";
 
 function asRecord(body: unknown): Record<string, unknown> | null {
@@ -64,12 +65,33 @@ function readPreferencia(
   return "";
 }
 
+function looksLikeWhatsApp(value: string): boolean {
+  const digits = value.replace(/\D/g, "");
+  return digits.length >= 8 && digits.length <= 15;
+}
+
 function validateEmailField(email: string, errors: FieldErrors) {
   if (!email) {
     errors.email = ERROR_REQUERIDO;
   } else if (!EMAIL_RE.test(email)) {
     errors.email = ERROR_EMAIL;
   }
+}
+
+function validateNewsletterContacto(
+  valor: string,
+  preferencia: PreferenciaRespuesta | "",
+  errors: FieldErrors,
+) {
+  if (!valor) {
+    errors.email = ERROR_REQUERIDO;
+    return;
+  }
+  if (preferencia === "whatsapp") {
+    if (!looksLikeWhatsApp(valor)) errors.email = ERROR_WHATSAPP;
+    return;
+  }
+  if (!EMAIL_RE.test(valor)) errors.email = ERROR_EMAIL;
 }
 
 export function validateConsulta(
@@ -139,7 +161,7 @@ export function validateConsulta(
     const preferencia = readPreferencia(rec.preferencia, errors);
 
     if (!nombre) errors.nombre = ERROR_REQUERIDO;
-    validateEmailField(email, errors);
+    validateNewsletterContacto(email, preferencia, errors);
 
     if (Object.keys(errors).length > 0 || preferencia === "") {
       return { ok: false, errors };
@@ -215,7 +237,7 @@ export function formatNewsletterWhatsApp(data: NewsletterPayload): string {
     "Hola, quiero suscribirme al boletín de industria de FIRMIND.",
     "",
     `Nombre: ${data.nombre}`,
-    `Email: ${data.email}`,
+    `Email/WhatsApp: ${data.email}`,
   ];
   if (data.sector) {
     lineas.push(`Sector: ${data.sector}`);

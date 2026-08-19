@@ -116,32 +116,33 @@ export function NewsletterForm() {
       </div>
       <div>
         <label htmlFor="newsletter-email" className={labelClass}>
-          Email
+          Email/WhatsApp
         </label>
         <input
           id="newsletter-email"
           name="email"
-          type="email"
-          autoComplete="email"
+          type="text"
+          inputMode={preferencia === "whatsapp" ? "tel" : "email"}
+          autoComplete={preferencia === "whatsapp" ? "tel" : "email"}
           value={email}
           onChange={(event) => setEmail(event.target.value)}
           className={fieldClass}
         />
         {errors.email ? <p className={errorClass}>{errors.email}</p> : null}
       </div>
-        <div>
-          <label htmlFor="newsletter-sector" className={labelClass}>
-            Sector / rubro industrial (opcional)
-          </label>
-          <input
-            id="newsletter-sector"
-            name="sector"
-            type="text"
-            value={sector}
-            onChange={(event) => setSector(event.target.value)}
-            className={fieldClass}
-          />
-        </div>
+      <div>
+        <label htmlFor="newsletter-sector" className={labelClass}>
+          Sector / rubro industrial (opcional)
+        </label>
+        <input
+          id="newsletter-sector"
+          name="sector"
+          type="text"
+          value={sector}
+          onChange={(event) => setSector(event.target.value)}
+          className={fieldClass}
+        />
+      </div>
       <fieldset>
         <legend className={labelClass}>Contactar por</legend>
         <div className="mt-2 flex flex-wrap gap-4">
