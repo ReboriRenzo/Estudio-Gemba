@@ -22,7 +22,7 @@ export default function HomePage() {
         />
         <div className="absolute inset-0 bg-navy/55" />
         <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-navy/50 to-transparent" />
-        <div className="relative mx-auto flex h-full max-w-6xl flex-col justify-end px-4 pb-6 pt-6 md:pb-10 md:pt-8">
+        <div className="relative mx-auto flex h-full max-w-6xl flex-col justify-end px-4 pb-6 pt-24 md:pb-10 md:pt-32 lg:pt-36">
           <p className="text-xs uppercase tracking-[0.32em] text-white/80">
             Estudio técnico · Buenos Aires
           </p>

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import type { PreferenciaRespuesta } from "@/lib/consulta";
+import { canalDesdeContacto } from "@/lib/consulta";
 
 type FieldErrors = Record<string, string>;
 
@@ -18,13 +18,13 @@ export function NewsletterForm() {
   const [nombre, setNombre] = useState("");
   const [email, setEmail] = useState("");
   const [sector, setSector] = useState("");
-  const [preferencia, setPreferencia] = useState<PreferenciaRespuesta>("email");
   const [errors, setErrors] = useState<FieldErrors>({});
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">(
     "idle",
   );
   const [message, setMessage] = useState("");
 
+  const canal = canalDesdeContacto(email);
   const fieldClass =
     "mt-1 w-full rounded-none border border-navy bg-white px-3 py-2 text-sm text-navy";
   const labelClass = "text-sm text-navy";
@@ -45,7 +45,7 @@ export function NewsletterForm() {
           nombre,
           email,
           sector,
-          preferencia,
+          preferencia: canal || undefined,
         }),
       });
 
@@ -122,8 +122,8 @@ export function NewsletterForm() {
           id="newsletter-email"
           name="email"
           type="text"
-          inputMode={preferencia === "whatsapp" ? "tel" : "email"}
-          autoComplete={preferencia === "whatsapp" ? "tel" : "email"}
+          inputMode={canal === "whatsapp" ? "tel" : "email"}
+          autoComplete={canal === "whatsapp" ? "tel" : "email"}
           value={email}
           onChange={(event) => setEmail(event.target.value)}
           className={fieldClass}
@@ -143,36 +143,6 @@ export function NewsletterForm() {
           className={fieldClass}
         />
       </div>
-      <fieldset>
-        <legend className={labelClass}>Contactar por</legend>
-        <div className="mt-2 flex flex-wrap gap-4">
-          <label className={`inline-flex items-center gap-2 ${labelClass}`}>
-            <input
-              type="radio"
-              name="newsletter-preferencia"
-              value="email"
-              checked={preferencia === "email"}
-              onChange={() => setPreferencia("email")}
-              className="accent-navy"
-            />
-            Email
-          </label>
-          <label className={`inline-flex items-center gap-2 ${labelClass}`}>
-            <input
-              type="radio"
-              name="newsletter-preferencia"
-              value="whatsapp"
-              checked={preferencia === "whatsapp"}
-              onChange={() => setPreferencia("whatsapp")}
-              className="accent-navy"
-            />
-            WhatsApp
-          </label>
-        </div>
-        {errors.preferencia ? (
-          <p className={errorClass}>{errors.preferencia}</p>
-        ) : null}
-      </fieldset>
       {status === "error" ? <p className={errorClass}>{message}</p> : null}
       <button
         type="submit"

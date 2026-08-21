@@ -41,7 +41,7 @@ export type FieldErrors = Record<string, string>;
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const ERROR_REQUERIDO = "Completá este campo.";
 const ERROR_EMAIL = "Ingresá un email válido.";
-const ERROR_WHATSAPP = "Ingresá un WhatsApp válido.";
+const ERROR_CONTACTO = "Ingresá un email o un WhatsApp válido.";
 const ERROR_MENSAJE = "El mensaje no puede superar 2000 caracteres.";
 
 function asRecord(body: unknown): Record<string, unknown> | null {
@@ -70,6 +70,13 @@ function looksLikeWhatsApp(value: string): boolean {
   return digits.length >= 8 && digits.length <= 15;
 }
 
+export function canalDesdeContacto(valor: string): PreferenciaRespuesta | "" {
+  const v = valor.trim();
+  if (EMAIL_RE.test(v)) return "email";
+  if (looksLikeWhatsApp(v)) return "whatsapp";
+  return "";
+}
+
 function validateEmailField(email: string, errors: FieldErrors) {
   if (!email) {
     errors.email = ERROR_REQUERIDO;
@@ -78,20 +85,14 @@ function validateEmailField(email: string, errors: FieldErrors) {
   }
 }
 
-function validateNewsletterContacto(
-  valor: string,
-  preferencia: PreferenciaRespuesta | "",
-  errors: FieldErrors,
-) {
+function validateNewsletterContacto(valor: string, errors: FieldErrors) {
   if (!valor) {
     errors.email = ERROR_REQUERIDO;
     return;
   }
-  if (preferencia === "whatsapp") {
-    if (!looksLikeWhatsApp(valor)) errors.email = ERROR_WHATSAPP;
-    return;
+  if (!canalDesdeContacto(valor)) {
+    errors.email = ERROR_CONTACTO;
   }
-  if (!EMAIL_RE.test(valor)) errors.email = ERROR_EMAIL;
 }
 
 export function validateConsulta(
@@ -158,10 +159,10 @@ export function validateConsulta(
     const nombre = readString(rec.nombre);
     const email = readString(rec.email);
     const sector = typeof rec.sector === "string" ? rec.sector.trim() : "";
-    const preferencia = readPreferencia(rec.preferencia, errors);
+    const preferencia = canalDesdeContacto(email);
 
     if (!nombre) errors.nombre = ERROR_REQUERIDO;
-    validateNewsletterContacto(email, preferencia, errors);
+    validateNewsletterContacto(email, errors);
 
     if (Object.keys(errors).length > 0 || preferencia === "") {
       return { ok: false, errors };
@@ -274,7 +275,8 @@ export async function resolverEnvio(
   opts: { sendEmail?: SendEmail; log?: (data: ConsultaPayload) => void },
 ): Promise<EnvioResultado> {
   const text = formatConsultaText(data);
-  const emailDestino = contacto.email.trim();
+  const emailConsulta = contacto.email.trim();
+  const emailBoletin = contacto.emailBoletin.trim() || emailConsulta;
   const whatsapp = contacto.whatsapp.trim();
 
   if (data.tipo === "newsletter") {
@@ -289,16 +291,16 @@ export async function resolverEnvio(
     }
 
     const subject = `Boletín de Industria — ${data.nombre}`;
-    if (emailDestino && opts.sendEmail) {
+    if (emailBoletin && opts.sendEmail) {
       try {
-        await opts.sendEmail({ to: emailDestino, subject, text });
+        await opts.sendEmail({ to: emailBoletin, subject, text });
         return { kind: "emailed" };
       } catch {
         return { kind: "provider_error" };
       }
     }
-    if (emailDestino) {
-      return { kind: "mailto", url: buildMailtoUrl(emailDestino, subject, text) };
+    if (emailBoletin) {
+      return { kind: "mailto", url: buildMailtoUrl(emailBoletin, subject, text) };
     }
     opts.log?.(data);
     return { kind: "queued" };
@@ -306,18 +308,18 @@ export async function resolverEnvio(
 
   if (data.tipo === "consulta") {
     const subject = `Consulta — ${data.empresa}`;
-    if (emailDestino && opts.sendEmail) {
+    if (emailConsulta && opts.sendEmail) {
       try {
-        await opts.sendEmail({ to: emailDestino, subject, text });
+        await opts.sendEmail({ to: emailConsulta, subject, text });
         return { kind: "emailed" };
       } catch {
         return { kind: "provider_error" };
       }
     }
-    if (emailDestino) {
+    if (emailConsulta) {
       return {
         kind: "mailto",
-        url: buildMailtoUrl(emailDestino, subject, text),
+        url: buildMailtoUrl(emailConsulta, subject, text),
       };
     }
     opts.log?.(data);
@@ -327,10 +329,10 @@ export async function resolverEnvio(
   const intentaEmail = data.preferencia === "email";
 
   if (intentaEmail) {
-    if (emailDestino && opts.sendEmail) {
+    if (emailConsulta && opts.sendEmail) {
       try {
         await opts.sendEmail({
-          to: emailDestino,
+          to: emailConsulta,
           subject: `Presupuesto — ${data.empresa}`,
           text,
         });

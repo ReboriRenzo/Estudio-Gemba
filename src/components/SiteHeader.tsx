@@ -67,7 +67,7 @@ export function SiteHeader() {
       <header
         className={
           overlay
-            ? "fixed top-[var(--dev-banner-h)] z-50 h-20 w-full border-b border-transparent bg-transparent transition-[background-color,border-color,height] duration-300 md:h-32 lg:h-36"
+            ? "fixed top-[var(--dev-banner-h)] z-50 h-20 w-full border-b border-transparent bg-transparent transition-[background-color,border-color,height] duration-300 md:h-24 lg:h-28"
             : "fixed top-[var(--dev-banner-h)] z-50 h-[var(--site-header-h)] w-full border-b border-navy/15 bg-white transition-[background-color,border-color,height] duration-300"
         }
       >
@@ -87,7 +87,7 @@ export function SiteHeader() {
               height={725}
               className={
                 overlay
-                  ? "h-10 w-auto max-w-[46vw] transition-[height] duration-300 md:h-24 md:max-w-none lg:h-28"
+                  ? "h-10 w-auto max-w-[46vw] transition-[height] duration-300 md:h-16 md:max-w-none lg:h-20"
                   : "h-10 w-auto max-w-[46vw] transition-[height] duration-300 md:h-12 md:max-w-none"
               }
               priority

@@ -1,5 +1,6 @@
 export type ContactoConfig = {
   email: string;
+  emailBoletin: string;
   whatsapp: string;
   linkedin: string;
   horario: string;
@@ -7,7 +8,8 @@ export type ContactoConfig = {
 };
 
 export const contacto: ContactoConfig = {
-  email: "",
+  email: "contacto@firmind.com.ar",
+  emailBoletin: "industria@firmind.com.ar",
   whatsapp: "5491127642266",
   linkedin: "",
   horario: "09:00 a 20:00",

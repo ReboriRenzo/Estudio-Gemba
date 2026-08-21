@@ -53,23 +53,20 @@ export default async function ServicioPage({ params }: Props) {
       <section className="border-b border-navy/15">
         <div className="mx-auto grid max-w-6xl gap-12 px-4 py-20 lg:grid-cols-12">
           <p className="text-xs uppercase tracking-[0.22em] lg:col-span-3">
-            {servicio.slug === "diagnostico" ? "01 — Qué se logra" : "01 — Alcance"}
+            01 — Qué se logra
           </p>
           <div className="lg:col-span-9">
-            {servicio.slug === "diagnostico" ? null : (
-              <h2 className="text-2xl font-medium uppercase tracking-[0.12em] md:text-3xl">
-                {servicio.resultado}
-              </h2>
-            )}
-            <div
-              className={
-                servicio.slug === "diagnostico"
-                  ? "max-w-3xl space-y-5 text-base leading-relaxed md:text-lg"
-                  : "mt-8 max-w-3xl space-y-5 text-base leading-relaxed md:text-lg"
-              }
-            >
+            <h2 className="text-2xl font-medium uppercase tracking-[0.12em] md:text-3xl">
+              {servicio.resultado}
+            </h2>
+            <div className="mt-8 max-w-3xl space-y-5 text-base leading-relaxed md:text-lg">
               <p>{servicio.contexto}</p>
-              <p>{servicio.paraQuien}</p>
+              <p>
+                <span className="block text-xs uppercase tracking-[0.22em]">
+                  ¿Para quién?
+                </span>
+                <span className="mt-3 block">{servicio.paraQuien}</span>
+              </p>
             </div>
           </div>
         </div>
@@ -91,14 +88,16 @@ export default async function ServicioPage({ params }: Props) {
             <h2 className="mt-4 text-2xl font-medium uppercase tracking-[0.12em]">
               {servicio.slug === "diagnostico"
                 ? "Lo que la planta no registra"
-                : "Criterio de éxito"}
+                : servicio.slug === "ejecucion"
+                  ? "Lo que se revisa cada quince días"
+                  : "Lo que queda cuando nos vamos"}
             </h2>
             <p className="mt-6 text-base leading-relaxed">{servicio.queSeMide}</p>
-            {servicio.slug === "diagnostico" ? null : (
+            {servicio.slug === "ejecucion" ? (
               <p className="mt-4 text-base leading-relaxed">
-                {servicio.criterioExito}
+                {servicio.criterioExito.replace(/\.$/, "")}
               </p>
-            )}
+            ) : null}
             <ul className="mt-8 flex flex-wrap gap-2">
               {servicio.indicadores.map((item) => (
                 <li
@@ -119,7 +118,11 @@ export default async function ServicioPage({ params }: Props) {
             03 — Qué se hace en planta
           </p>
           <h2 className="mt-4 max-w-2xl text-2xl font-medium uppercase tracking-[0.12em] md:text-3xl">
-            El trabajo, en el piso
+            {servicio.slug === "ejecucion"
+              ? "Cómo se sostiene el avance"
+              : servicio.slug === "autonomia"
+                ? "El trabajo, con su gente"
+                : "El trabajo, en el piso"}
           </h2>
           <ol
             className={

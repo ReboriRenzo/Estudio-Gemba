@@ -77,7 +77,6 @@ describe("validateConsulta", () => {
       tipo: "newsletter",
       nombre: "Ana Pérez",
       email: "ana@acme.com",
-      preferencia: "email",
     });
     expect(r).toEqual({ ok: true, data: newsletterOk });
   });
@@ -87,33 +86,24 @@ describe("validateConsulta", () => {
       tipo: "newsletter",
       nombre: "Ana Pérez",
       email: "11 2764-2266",
-      preferencia: "whatsapp",
     });
     expect(r.ok).toBe(true);
     if (r.ok && r.data.tipo === "newsletter") {
       expect(r.data.email).toBe("11 2764-2266");
+      expect(r.data.preferencia).toBe("whatsapp");
     }
   });
 
-  it("rechaza newsletter con WhatsApp inválido", () => {
+  it("rechaza newsletter con contacto inválido", () => {
     const r = validateConsulta({
       tipo: "newsletter",
       nombre: "Ana Pérez",
       email: "ana@",
-      preferencia: "whatsapp",
     });
     expect(r.ok).toBe(false);
-    if (!r.ok) expect(r.errors.email).toBe("Ingresá un WhatsApp válido.");
-  });
-
-  it("rechaza newsletter sin preferencia de canal", () => {
-    const r = validateConsulta({
-      tipo: "newsletter",
-      nombre: "Ana Pérez",
-      email: "ana@acme.com",
-    });
-    expect(r.ok).toBe(false);
-    if (!r.ok) expect(r.errors.preferencia).toBe("Completá este campo.");
+    if (!r.ok) {
+      expect(r.errors.email).toBe("Ingresá un email o un WhatsApp válido.");
+    }
   });
 
   it("acepta consulta por email", () => {
@@ -219,7 +209,7 @@ describe("resolverEnvio", () => {
     );
     expect(r).toEqual({ kind: "emailed" });
     expect(sendEmail).toHaveBeenCalledWith({
-      to: "hola@firmind.com",
+      to: "industria@firmind.com.ar",
       subject: "Boletín de Industria — Ana Pérez",
       text: formatConsultaText(newsletterOk),
     });
@@ -228,12 +218,12 @@ describe("resolverEnvio", () => {
   it("newsletter con preferencia email usa mailto si hay casilla y no hay Resend", async () => {
     const r = await resolverEnvio(
       newsletterOk,
-      { ...contacto, email: "hola@firmind.com.ar" },
+      { ...contacto, emailBoletin: "industria@firmind.com.ar" },
       {},
     );
     expect(r.kind).toBe("mailto");
     if (r.kind === "mailto") {
-      expect(r.url).toContain("mailto:hola@firmind.com.ar");
+      expect(r.url).toContain("mailto:industria@firmind.com.ar");
       expect(decodeURIComponent(r.url)).toContain("Boletín de Industria");
     }
   });

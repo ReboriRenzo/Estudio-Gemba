@@ -45,9 +45,9 @@ export const SERVICIOS = [
     resumenLargo:
       "Recorrido del material y la información, desde el pedido hasta el producto terminado. Medición propia, alcance cerrado y sin obligación de continuar.",
     resultado:
-      "Que la dirección pueda decir en una frase dónde pierde y cuánto.",
+      "El diagnóstico se hace en planta, con medición propia",
     contexto:
-      "El diagnóstico se hace en planta, con medición propia. Recorremos el material y la información desde que entra el pedido hasta que sale el producto terminado, medimos capacidad efectiva por etapa contra la demanda e identificamos la restricción del sistema y sus pérdidas.",
+      "Recorremos el material y la información desde que entra el pedido hasta que sale el producto terminado, medimos capacidad efectiva por etapa contra la demanda e identificamos la restricción del sistema y sus pérdidas.",
     paraQuien:
       "Dueños y directores de PyMEs industriales que quieren saber qué está limitando su resultado.",
     queSeMide:
@@ -97,15 +97,15 @@ export const SERVICIOS = [
     slug: "ejecucion",
     fase: "02",
     titulo: "Ejecución",
-    duracion: "Ciclos de 3 meses · Renovable",
+    duracion: "Ciclos de 3 meses · Renovable · Se contrata por separado",
     resumen:
       "Tres prioridades para el trimestre, cada una con indicador y responsable. El trabajo se concentra en lo que traba la ejecución.",
     resumenLargo:
       "Sesión quincenal con la dirección, visita mensual a planta y seguimiento semanal de compromisos. Decisiones postergadas, delegación y prioridades que se desplazan ante cada urgencia.",
     resultado:
-      "Compromisos cumplidos en fecha y movimiento verificable del indicador definido al inicio.",
+      "Compromisos cumplidos en fecha y movimiento verificable del indicador definido al inicio",
     contexto:
-      "Tres prioridades para el trimestre, cada una con indicador y responsable. El trabajo se concentra en lo que traba la ejecución: decisiones postergadas, delegación que no ocurre, prioridades que se desplazan ante cada urgencia. Marco ICF, con explicitación del cambio de rol al pasar a la recomendación técnica.",
+      "Tres prioridades para el trimestre, cada una con indicador y responsable. El trabajo se concentra en lo que traba la ejecución: decisiones postergadas, delegación que no ocurre, prioridades que se desplazan ante cada urgencia.",
     paraQuien:
       "Dirección que ya localizó la restricción y necesita mover el indicador en un trimestre.",
     queSeMide:
@@ -132,16 +132,11 @@ export const SERVICIOS = [
     altPlanta: "Tablero de hitos y seguimiento en un pasillo de planta",
     altDetalle: "Detalle de hitos y tarjetas de seguimiento en planta",
     marquee: [
-      "Ciclos de 3 meses",
-      "Tres prioridades",
-      "Indicador",
-      "Responsable",
-      "Compromisos",
-      "Sesión quincenal",
-      "Visita mensual",
-      "Tablero",
-      "Ejecución",
-      "Beneficio verificado",
+      "Tres prioridades por trimestre",
+      "Un indicador por prioridad",
+      "Un responsable con nombre",
+      "Seguimiento semanal de compromisos",
+      "Visita mensual a planta",
     ],
     icon: "chart-bar",
   },
@@ -155,7 +150,7 @@ export const SERVICIOS = [
     resumenLargo:
       "Estándares, gestión visual e indicadores de turno. Rutina de gestión diaria: qué se revisa, con quién, con qué dato, a qué hora. Acompañamiento con presencia decreciente.",
     resultado:
-      "Que a los 90 días de la última visita la rutina siga funcionando.",
+      "Que a los 90 días de la última visita la rutina siga funcionando",
     contexto:
       "Formación de supervisores y jefes de turno sobre los problemas concretos de esa planta. Estándares de trabajo, gestión visual e indicadores de turno. Rutina de gestión diaria: qué se revisa, con quién, con qué dato, a qué hora. Acompañamiento hasta que la conducción sea autónoma.",
     paraQuien:
@@ -184,7 +179,6 @@ export const SERVICIOS = [
     altPlanta: "Pasillos marcados, estación de limpieza y gestión visual",
     altDetalle: "Detalle de tablero de sombras y cinta de piso",
     marquee: [
-      "Presencia decreciente",
       "Estándares",
       "Gestión visual",
       "Indicadores de turno",
@@ -193,7 +187,7 @@ export const SERVICIOS = [
       "Tablero operativo",
       "90 días",
       "Formación",
-      "Autonomía",
+      "Rutina diaria",
     ],
     icon: "squares-2x2",
   },

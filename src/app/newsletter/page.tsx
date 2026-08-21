@@ -82,8 +82,8 @@ export default async function NewsletterPage() {
               Suscribite gratis
             </h2>
             <p className="mt-4 mb-8 max-w-xl text-base leading-relaxed">
-              Completá el formulario y elegí WhatsApp o email. Coordinamos el
-              alta por el canal que elijas.
+              Completá el formulario con tu email o WhatsApp. Coordinamos el
+              alta por el canal que indiques.
             </p>
             <div className="border border-navy/20 bg-white p-6 md:p-8">
               <NewsletterForm />

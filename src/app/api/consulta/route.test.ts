@@ -21,7 +21,7 @@ describe("POST /api/consulta", () => {
     expect(json.errors.email).toBeTruthy();
   });
 
-  it("200 queued cuando no hay canales", async () => {
+  it("200 mailto al boletín cuando hay email y no hay Resend", async () => {
     const res = await POST(
       new Request("http://localhost/api/consulta", {
         method: "POST",
@@ -36,6 +36,8 @@ describe("POST /api/consulta", () => {
       }),
     );
     expect(res.status).toBe(200);
-    expect(await res.json()).toEqual({ ok: true, queued: true });
+    const json = await res.json();
+    expect(json.ok).toBe(true);
+    expect(json.mailtoUrl).toContain("mailto:industria@firmind.com.ar");
   });
 });
