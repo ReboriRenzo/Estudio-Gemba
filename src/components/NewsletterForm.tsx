@@ -132,7 +132,7 @@ export function NewsletterForm() {
       </div>
       <div>
         <label htmlFor="newsletter-sector" className={labelClass}>
-          Sector / rubro industrial (opcional)
+          Sector/rubro industrial (opcional)
         </label>
         <input
           id="newsletter-sector"

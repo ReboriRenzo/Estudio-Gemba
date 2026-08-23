@@ -5,6 +5,7 @@ export function JsonLd() {
     name: "FIRMIND",
     url: "https://firmind.com.ar",
     email: "contacto@firmind.com.ar",
+    sameAs: ["https://www.linkedin.com/company/firmind"],
     areaServed: { "@type": "AdministrativeArea", name: "Buenos Aires" },
     serviceType: "Ingeniería y optimización de procesos industriales",
   };

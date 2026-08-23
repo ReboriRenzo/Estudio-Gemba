@@ -11,7 +11,7 @@ export const contacto: ContactoConfig = {
   email: "contacto@firmind.com.ar",
   emailBoletin: "industria@firmind.com.ar",
   whatsapp: "5491127642266",
-  linkedin: "",
+  linkedin: "https://www.linkedin.com/company/firmind",
   horario: "09:00 a 20:00",
   zona: "Zona Sur, Buenos Aires · Argentina",
 };

@@ -34,7 +34,7 @@ describe("contacto v1", () => {
     expect(contacto.email).toBe("contacto@firmind.com.ar");
     expect(contacto.emailBoletin).toBe("industria@firmind.com.ar");
     expect(contacto.whatsapp).toBe("5491127642266");
-    expect(contacto.linkedin).toBe("");
+    expect(contacto.linkedin).toBe("https://www.linkedin.com/company/firmind");
     expect(contacto.horario).toBe("09:00 a 20:00");
     expect(contacto.zona).toBe("Zona Sur, Buenos Aires · Argentina");
   });

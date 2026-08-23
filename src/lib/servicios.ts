@@ -45,9 +45,9 @@ export const SERVICIOS = [
     resumenLargo:
       "Recorrido del material y la información, desde el pedido hasta el producto terminado. Medición propia, alcance cerrado y sin obligación de continuar.",
     resultado:
-      "El diagnóstico se hace en planta, con medición propia",
+      "Que la dirección pueda decir en una frase dónde pierde y cuánto",
     contexto:
-      "Recorremos el material y la información desde que entra el pedido hasta que sale el producto terminado, medimos capacidad efectiva por etapa contra la demanda e identificamos la restricción del sistema y sus pérdidas.",
+      "El diagnóstico se hace en planta, con medición propia. Recorremos el material y la información desde que entra el pedido hasta que sale el producto terminado, medimos capacidad efectiva por etapa contra la demanda e identificamos la restricción del sistema y sus pérdidas.",
     paraQuien:
       "Dueños y directores de PyMEs industriales que quieren saber qué está limitando su resultado.",
     queSeMide:
