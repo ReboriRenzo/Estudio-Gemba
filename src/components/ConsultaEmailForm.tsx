@@ -9,7 +9,6 @@ const ERROR_ENVIO =
 const EXITO_QUEUED =
   "Recibimos tu consulta. Cuando el email esté activo, te respondemos.";
 const EXITO_EMAIL = "Recibimos tu consulta. Te respondemos por email.";
-const EXITO_MAILTO = "Se abrió tu cliente de correo con la consulta.";
 
 export function ConsultaEmailForm() {
   const [empresa, setEmpresa] = useState("");
@@ -69,9 +68,8 @@ export function ConsultaEmailForm() {
       }
 
       if (json.mailtoUrl) {
-        window.location.assign(json.mailtoUrl);
-        setStatus("success");
-        setMessage(EXITO_MAILTO);
+        setStatus("error");
+        setMessage(ERROR_ENVIO);
         return;
       }
 

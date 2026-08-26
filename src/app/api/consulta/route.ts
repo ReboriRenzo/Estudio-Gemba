@@ -9,7 +9,7 @@ import {
 function sendEmailFromEnv(): SendEmail | undefined {
   const key = process.env.RESEND_API_KEY;
   if (!key || !contacto.email.trim()) return undefined;
-  return async ({ to, subject, text }) => {
+  return async ({ to, subject, text, replyTo }) => {
     const { Resend } = await import("resend");
     const resend = new Resend(key);
     const result = await resend.emails.send({
@@ -17,6 +17,7 @@ function sendEmailFromEnv(): SendEmail | undefined {
       to,
       subject,
       text,
+      ...(replyTo ? { replyTo } : {}),
     });
     if (result.error) throw new Error(result.error.message);
   };

@@ -40,4 +40,23 @@ describe("POST /api/consulta", () => {
     expect(json.ok).toBe(true);
     expect(json.mailtoUrl).toContain("mailto:industria@firmind.com.ar");
   });
+
+  it("503 en consulta si no hay Resend", async () => {
+    const res = await POST(
+      new Request("http://localhost/api/consulta", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          tipo: "consulta",
+          empresa: "Acme SA",
+          nombre: "Ana Pérez",
+          email: "ana@acme.com",
+          mensaje: "Consulta sobre OEE.",
+        }),
+      }),
+    );
+    expect(res.status).toBe(503);
+    const json = await res.json();
+    expect(json.ok).toBe(false);
+  });
 });

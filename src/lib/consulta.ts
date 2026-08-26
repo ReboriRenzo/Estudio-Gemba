@@ -260,6 +260,7 @@ export type SendEmail = (args: {
   to: string;
   subject: string;
   text: string;
+  replyTo?: string;
 }) => Promise<void>;
 
 export type EnvioResultado =
@@ -293,7 +294,12 @@ export async function resolverEnvio(
     const subject = `Boletín de Industria — ${data.nombre}`;
     if (emailBoletin && opts.sendEmail) {
       try {
-        await opts.sendEmail({ to: emailBoletin, subject, text });
+        await opts.sendEmail({
+          to: emailBoletin,
+          subject,
+          text,
+          replyTo: data.preferencia === "email" ? data.email : undefined,
+        });
         return { kind: "emailed" };
       } catch {
         return { kind: "provider_error" };
@@ -310,20 +316,19 @@ export async function resolverEnvio(
     const subject = `Consulta — ${data.empresa}`;
     if (emailConsulta && opts.sendEmail) {
       try {
-        await opts.sendEmail({ to: emailConsulta, subject, text });
+        await opts.sendEmail({
+          to: emailConsulta,
+          subject,
+          text,
+          replyTo: data.email,
+        });
         return { kind: "emailed" };
       } catch {
         return { kind: "provider_error" };
       }
     }
-    if (emailConsulta) {
-      return {
-        kind: "mailto",
-        url: buildMailtoUrl(emailConsulta, subject, text),
-      };
-    }
     opts.log?.(data);
-    return { kind: "queued" };
+    return { kind: "provider_error" };
   }
 
   const intentaEmail = data.preferencia === "email";
@@ -335,6 +340,7 @@ export async function resolverEnvio(
           to: emailConsulta,
           subject: `Presupuesto — ${data.empresa}`,
           text,
+          replyTo: data.email,
         });
         return { kind: "emailed" };
       } catch {

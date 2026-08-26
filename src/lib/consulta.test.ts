@@ -212,6 +212,7 @@ describe("resolverEnvio", () => {
       to: "industria@firmind.com.ar",
       subject: "Boletín de Industria — Ana Pérez",
       text: formatConsultaText(newsletterOk),
+      replyTo: "ana@acme.com",
     });
   });
 
@@ -228,7 +229,7 @@ describe("resolverEnvio", () => {
     }
   });
 
-  it("consulta por email usa mailto si hay casilla y no hay Resend", async () => {
+  it("consulta sin Resend no abre el cliente de correo", async () => {
     const r = await resolverEnvio(
       {
         tipo: "consulta",
@@ -240,12 +241,36 @@ describe("resolverEnvio", () => {
       { ...contacto, email: "hola@firmind.com.ar" },
       {},
     );
-    expect(r.kind).toBe("mailto");
-    if (r.kind === "mailto") {
-      expect(r.url).toContain("mailto:hola@firmind.com.ar");
-      expect(decodeURIComponent(r.url)).toContain("Consulta sobre OEE.");
-      expect(decodeURIComponent(r.url)).toContain("Acme SA");
-    }
+    expect(r).toEqual({ kind: "provider_error" });
+  });
+
+  it("consulta envía el cuerpo plano a contacto y replyTo del visitante", async () => {
+    const sendEmail = vi.fn().mockResolvedValue(undefined);
+    const data = {
+      tipo: "consulta" as const,
+      empresa: "Matias",
+      nombre: "Matias Acuña",
+      email: "ana@acme.com",
+      mensaje: "Consulta",
+    };
+    const r = await resolverEnvio(
+      data,
+      { ...contacto, email: "contacto@firmind.com.ar" },
+      { sendEmail },
+    );
+    expect(r).toEqual({ kind: "emailed" });
+    expect(sendEmail).toHaveBeenCalledWith({
+      to: "contacto@firmind.com.ar",
+      subject: "Consulta — Matias",
+      text: [
+        "Tipo: consulta",
+        "Empresa: Matias",
+        "Nombre: Matias Acuña",
+        "Email: ana@acme.com",
+        "Mensaje: Consulta",
+      ].join("\n"),
+      replyTo: "ana@acme.com",
+    });
   });
 
   it("provider_error si sendEmail rechaza", async () => {
