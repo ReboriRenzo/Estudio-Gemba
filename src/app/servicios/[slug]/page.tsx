@@ -95,7 +95,7 @@ export default async function ServicioPage({ params }: Props) {
             <p className="mt-6 text-base leading-relaxed">{servicio.queSeMide}</p>
             {servicio.slug === "ejecucion" ? (
               <p className="mt-4 text-base leading-relaxed">
-                {servicio.criterioExito.replace(/\.$/, "")}
+                {servicio.criterioExito}
               </p>
             ) : null}
             <ul className="mt-8 flex flex-wrap gap-2">

@@ -10,8 +10,8 @@ import { VocabularioMarquee } from "@/components/VocabularioMarquee";
 export default function HomePage() {
   return (
     <>
-      <div className="flex h-[calc(100svh-var(--dev-banner-h))] flex-col">
-        <section className="relative min-h-0 flex-1 overflow-hidden bg-navy text-white">
+      <div className="flex min-h-[calc(100svh-var(--dev-banner-h))] flex-col">
+        <section className="relative flex min-h-0 flex-1 flex-col overflow-hidden bg-navy text-white">
         <Image
           src="/home/hero.png"
           alt="Nave industrial: el diagnóstico de FIRMIND empieza en planta"
@@ -22,7 +22,7 @@ export default function HomePage() {
         />
         <div className="absolute inset-0 bg-navy/55" />
         <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-navy/50 to-transparent" />
-        <div className="relative mx-auto flex h-full max-w-6xl flex-col justify-end px-4 pb-6 pt-24 md:pb-10 md:pt-32 lg:pt-36">
+        <div className="relative mx-auto flex w-full max-w-6xl flex-1 flex-col justify-start px-4 pb-6 pt-28 md:justify-end md:pb-10 md:pt-36 lg:pt-40">
           <p className="text-xs uppercase tracking-[0.32em] text-white/80">
             Estudio técnico · Buenos Aires
           </p>

@@ -75,8 +75,9 @@ export default function ContactoPage() {
                     href={contacto.linkedin.trim()}
                     target="_blank"
                     rel="noopener noreferrer"
+                    className="underline underline-offset-4"
                   >
-                    perfil
+                    visitar
                   </a>
                 </>
               ) : (

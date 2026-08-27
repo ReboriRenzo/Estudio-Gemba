@@ -18,7 +18,11 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://firmind.com.ar"),
-  title: { default: "FIRMIND", template: "%s | FIRMIND" },
+  applicationName: "FIRMIND",
+  title: {
+    default: "FIRMIND | Optimización de procesos industriales",
+    template: "%s | FIRMIND",
+  },
   description:
     "Ingeniería y optimización de procesos para PyMEs industriales. Diagnóstico en planta, ejecución y autonomía. Buenos Aires.",
   openGraph: {
@@ -26,11 +30,15 @@ export const metadata: Metadata = {
     type: "website",
     url: "https://firmind.com.ar",
     siteName: "FIRMIND",
-    images: [{ url: "/logo-firmind.png", alt: "FIRMIND" }],
+    title: "FIRMIND | Optimización de procesos industriales",
+    description:
+      "Ingeniería y optimización de procesos para PyMEs industriales. Diagnóstico en planta, ejecución y autonomía. Buenos Aires.",
   },
   twitter: {
-    card: "summary",
-    images: ["/logo-firmind.png"],
+    card: "summary_large_image",
+    title: "FIRMIND | Optimización de procesos industriales",
+    description:
+      "Ingeniería y optimización de procesos para PyMEs industriales. Diagnóstico en planta, ejecución y autonomía. Buenos Aires.",
   },
 };
 

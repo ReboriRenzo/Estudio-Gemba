@@ -67,8 +67,8 @@ export function SiteHeader() {
       <header
         className={
           overlay
-            ? "fixed top-[var(--dev-banner-h)] z-50 h-20 w-full border-b border-transparent bg-transparent transition-[background-color,border-color,height] duration-300 md:h-24 lg:h-28"
-            : "fixed top-[var(--dev-banner-h)] z-50 h-[var(--site-header-h)] w-full border-b border-navy/15 bg-white transition-[background-color,border-color,height] duration-300"
+            ? "fixed top-[var(--dev-banner-h)] z-50 h-16 w-full overflow-hidden border-b border-transparent bg-transparent transition-[background-color,border-color,height] duration-300 md:h-24 lg:h-28"
+            : "fixed top-[var(--dev-banner-h)] z-50 h-[var(--site-header-h)] w-full overflow-hidden border-b border-navy/15 bg-white transition-[background-color,border-color,height] duration-300"
         }
       >
         <div className="mx-auto flex h-full max-w-6xl items-center justify-between gap-3 px-4">
@@ -76,8 +76,8 @@ export function SiteHeader() {
             href="/"
             className={
               overlay
-                ? "min-w-0 shrink-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-                : "min-w-0 shrink-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-navy"
+                ? "flex h-full min-w-0 max-w-[min(11.5rem,46vw)] shrink-0 items-center overflow-hidden focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white md:max-w-none"
+                : "flex h-full min-w-0 max-w-[min(11.5rem,46vw)] shrink-0 items-center overflow-hidden focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-navy md:max-w-none"
             }
           >
             <Image
@@ -87,9 +87,10 @@ export function SiteHeader() {
               height={725}
               className={
                 overlay
-                  ? "h-10 w-auto max-w-[46vw] transition-[height] duration-300 md:h-16 md:max-w-none lg:h-20"
-                  : "h-10 w-auto max-w-[46vw] transition-[height] duration-300 md:h-12 md:max-w-none"
+                  ? "h-8 w-auto max-h-8 object-contain object-left transition-[height] duration-300 sm:h-10 sm:max-h-10 md:h-16 md:max-h-16 lg:h-20 lg:max-h-20"
+                  : "h-10 w-auto max-h-10 object-contain object-left transition-[height] duration-300 md:h-12 md:max-h-12"
               }
+              style={{ width: "auto" }}
               priority
             />
           </Link>
