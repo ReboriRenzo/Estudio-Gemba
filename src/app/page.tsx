@@ -88,10 +88,10 @@ export default function HomePage() {
           <div className="flex flex-col justify-center py-4 lg:py-8">
             <p className="text-xs uppercase tracking-[0.22em]">El estudio</p>
             <h2 className="mt-3 text-2xl font-medium uppercase tracking-[0.14em]">
-              Ingeniería en el piso, no en el PowerPoint
+              Ingeniería en el piso
             </h2>
             <p className="mt-6 text-base leading-relaxed">
-              FIRMIND es una red de especialistas. El diagnóstico se hace
+              FIRMIND es un estudio técnico. El diagnóstico se hace
               en planta, con medición propia, alcance cerrado y criterio de
               éxito acordado por escrito.
             </p>

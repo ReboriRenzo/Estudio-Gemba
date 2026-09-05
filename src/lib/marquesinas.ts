@@ -15,7 +15,7 @@ export const MARQUESINA_SOBRE = [
   "Medición propia",
   "En planta",
   "Alcance cerrado",
-  "Red de especialistas",
+  "Estudio técnico",
   "Presencia decreciente",
   "Cinco días",
   "Lean",

@@ -8,7 +8,7 @@ import { MARQUESINA_SOBRE } from "@/lib/marquesinas";
 export const metadata: Metadata = {
   title: "Sobre nosotros",
   description:
-    "Red de especialistas en optimización de procesos para PyMEs industriales. Diagnóstico en planta, alcance cerrado y presencia decreciente.",
+    "Estudio técnico en optimización de procesos para PyMEs industriales. Diagnóstico en planta, alcance cerrado y presencia decreciente.",
 };
 
 export default function SobreNosotrosPage() {
@@ -51,11 +51,11 @@ export default function SobreNosotrosPage() {
           </p>
           <div className="lg:col-span-9">
             <h2 className="text-2xl font-medium uppercase tracking-[0.12em] md:text-3xl">
-              Una red de especialistas, con alcance cerrado
+              Un estudio técnico, con alcance cerrado
             </h2>
             <div className="mt-8 max-w-3xl space-y-5 text-base leading-relaxed md:text-lg">
               <p>
-                Somos una red de especialistas que trabaja en distintas áreas
+                Somos un estudio técnico que trabaja en distintas áreas
                 según lo que requiera el proyecto. El diagnóstico lo hacemos en
                 planta, con medición propia.
               </p>
