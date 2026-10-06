@@ -173,11 +173,11 @@ export const SERVICIOS = [
     fotos: {
       card: "/servicios/tpm-5s.png",
       planta: "/servicios/tpm-5s-alt.png",
-      detalle: "/servicios/tpm-5s-detalle.png",
+      detalle: "/servicios/autonomia-detalle.jpg",
     },
     altHero: "Tablero de sombras y orden de piso para sostener la rutina",
     altPlanta: "Pasillos marcados, estación de limpieza y gestión visual",
-    altDetalle: "Detalle de tablero de sombras y cinta de piso",
+    altDetalle: "Tablero de gestión diaria con indicadores y planilla en planta",
     marquee: [
       "Estándares",
       "Gestión visual",
