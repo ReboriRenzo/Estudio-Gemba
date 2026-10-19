@@ -143,7 +143,7 @@ export function SiteFooter() {
           <p>
             Desarrollado por{" "}
             <a
-              href="https://www.instagram.com/vexelstudios/"
+              href="https://www.instagram.com/vexelstudios.ia/"
               target="_blank"
               rel="noopener noreferrer"
               className="underline underline-offset-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
