@@ -62,8 +62,7 @@ export function SiteFooter() {
             className="mb-4 h-12 w-auto"
           />
           <p className="text-sm leading-relaxed text-white">
-            Optimización de procesos con datos de planta, no con métodos
-            genéricos.
+            Mejora de operaciones con lo que se mide en planta.
           </p>
           <Link
             href="/sobre-nosotros"

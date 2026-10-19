@@ -29,8 +29,7 @@ export default function SobreNosotrosPage() {
             Estudio técnico · Buenos Aires
           </p>
           <h1 className="mt-4 max-w-4xl text-3xl font-medium uppercase tracking-[0.14em] md:text-5xl md:leading-tight">
-            Optimización de procesos con datos de planta, no con métodos
-            genéricos
+            Mejora de operaciones con lo que se mide en planta
           </h1>
           <p className="mt-6 max-w-2xl text-lg leading-relaxed text-white/90">
             Para dueños y directores de PyMEs industriales que quieren saber qué
